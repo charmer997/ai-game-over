@@ -1,0 +1,12 @@
+{
+  "id": "chapter-001",
+  "title": "第1话：开端",
+  "publishDate": "2024-01-01",
+  "description": "故事的开端，主角的冒险从这里开始",
+  "thumbnail": "/images/chapters/001/thumbnail.jpg",
+  "pages": [
+    "/images/chapters/001/page-001.jpg",
+    "/images/chapters/001/page-002.jpg",
+    "/images/chapters/001/page-003.jpg"
+  ]
+}
