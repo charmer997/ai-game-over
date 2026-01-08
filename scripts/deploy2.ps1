@@ -1,91 +1,163 @@
-# ===============================
-# deploy-chapter.ps1
-# 部署单话漫画（R2 + D1）
-# ===============================
+﻿Param(
+    [switch]$DryRun
+)
 
 $ErrorActionPreference = "Stop"
 
-$ChapterId = "chapter-001"
-$ChapterTitle = "第一话"
-$ChapterDesc = "第一话 正式发布"
-$ImageDir = "public/images/chapters/001"
-$R2Bucket = "r2-lovegame"
-$DBName = "lovegame"
+# ======================
+# Configuration
+# ======================
+$BaseImageDir = "public/images/chapters"
+$R2Bucket     = "r2-lovegame"
+$DBName       = "lovegame"
 
-Write-Host "🚀 开始部署 $ChapterId（Cloudflare）" -ForegroundColor Cyan
+Write-Host "=== Deploy chapters to Cloudflare (R2 + D1) ==="
+if ($DryRun) {
+    Write-Host "Mode: DRY RUN (no changes will be made)"
+}
 
-# -------------------------------
-# 0. 校验图片
-# -------------------------------
-Write-Host "`n🔍 校验图片文件..."
+# ======================
+# Helpers
+# ======================
 
-$images = @("001.png", "002.png", "003.png")
-foreach ($img in $images) {
-    if (-not (Test-Path "$ImageDir/$img")) {
-        Write-Error "❌ 缺少图片: $img"
-        exit 1
+function Get-ChapterIdFromFolder {
+    param(
+        [string]$Name,
+        [int]$Index
+    )
+
+    $m = [regex]::Match($Name, '(\d+)(?:\.(\d+))?')
+    if ($m.Success) {
+        $major = [int]$m.Groups[1].Value
+        if ($m.Groups[2].Success) {
+            $minor = $m.Groups[2].Value
+            return ("chapter-{0:D3}-{1}" -f $major, $minor)
+        } else {
+            return ("chapter-{0:D3}" -f $major)
+        }
     }
+
+    return ("chapter-{0:D3}" -f $Index)
 }
 
-if (-not (Test-Path "$ImageDir/thumbnail.png")) {
-    Copy-Item "$ImageDir/001.png" "$ImageDir/thumbnail.png"
+# ======================
+# Scan chapter folders
+# ======================
+$dirs = Get-ChildItem -Path $BaseImageDir -Directory | Sort-Object Name
+if (-not $dirs -or $dirs.Count -eq 0) {
+    throw "No chapter folders found under $BaseImageDir"
 }
 
-Write-Host "✅ 图片文件校验通过"
+$index = 0
 
-# -------------------------------
-# 1. 上传图片到 R2
-# -------------------------------
-Write-Host "`n📤 [1/4] 上传图片到 R2..."
+foreach ($dir in $dirs) {
+    $index++
+    $folderName = $dir.Name
+    $chapterId  = Get-ChapterIdFromFolder -Name $folderName -Index $index
+    $remoteFolder = $chapterId -replace '^chapter-', ''
 
-foreach ($img in $images) {
-    Write-Host "  → 上传 $img"
-    wrangler r2 object put "$R2Bucket/chapters/001/$img" `
-        --file "$ImageDir/$img"
+    Write-Host ""
+    Write-Host "Processing folder: $folderName -> $chapterId"
+
+    # ======================
+    # Collect images
+    # ======================
+    $images = Get-ChildItem $dir.FullName -File |
+            Where-Object { $_.Extension -match '\.(png|jpg|jpeg|webp)$' }
+
+    if (-not $images -or $images.Count -eq 0) {
+        Write-Host "  Skipped (no images)"
+        continue
+    }
+
+    # Natural sort by number in filename
+    $sorted = $images | Sort-Object {
+        $m = [regex]::Match($_.Name, '(\d+)')
+        if ($m.Success) { [int]$m.Groups[1].Value } else { $_.Name }
+    }
+
+    $pageCount = $sorted.Count
+
+    # ======================
+    # Ensure thumbnail
+    # ======================
+    $thumbPath = Join-Path $dir.FullName "thumbnail.png"
+    if (-not (Test-Path $thumbPath)) {
+        if ($DryRun) {
+            Write-Host "  [DryRun] Create thumbnail from first image"
+        } else {
+            Copy-Item $sorted[0].FullName $thumbPath -Force
+            Write-Host "  Thumbnail created"
+        }
+    }
+
+    # ======================
+    # Upload to R2
+    # ======================
+    foreach ($img in $sorted) {
+        $remotePath = "$R2Bucket/chapters/$remoteFolder/$($img.Name)"
+        if ($DryRun) {
+            Write-Host "  [DryRun] Upload $($img.Name) -> $remotePath"
+        } else {
+            Write-Host "  Upload $($img.Name)"
+            wrangler r2 object put $remotePath --file $img.FullName
+        }
+    }
+
+    # Upload thumbnail
+    if ($DryRun) {
+        Write-Host "  [DryRun] Upload thumbnail"
+    } else {
+        wrangler r2 object put "$R2Bucket/chapters/$remoteFolder/thumbnail.png" --file $thumbPath
+    }
+
+    # ======================
+    # Write chapters table
+    # ======================
+    $safeTitle = ($folderName -replace "'", "''")
+    $thumbnailUrl = "chapters/$remoteFolder/thumbnail.png"
+
+    $sqlChapter =
+    "INSERT OR IGNORE INTO chapters " +
+            "(id, title, description, thumbnail_url, page_count, published_at) VALUES " +
+            "('$chapterId', '$safeTitle', '', '$thumbnailUrl', $pageCount, CURRENT_TIMESTAMP);"
+
+    if ($DryRun) {
+        Write-Host "  [DryRun] SQL chapters:"
+        Write-Host "  $sqlChapter"
+    } else {
+        wrangler d1 execute $DBName --remote --command $sqlChapter
+        Write-Host "  chapters inserted"
+    }
+
+    # ======================
+    # Write chapter_pages
+    # ======================
+    $values = @()
+    $pageNum = 0
+
+    foreach ($img in $sorted) {
+        $pageNum++
+        $imgNameEsc = ($img.Name -replace "'", "''")
+        $imgUrl = "chapters/$remoteFolder/$imgNameEsc"
+        $values += "('$chapterId', $pageNum, '$imgUrl')"
+    }
+
+    $valuesSql = [string]::Join(", ", $values)
+    $sqlPages =
+    "INSERT OR IGNORE INTO chapter_pages " +
+            "(chapter_id, page_number, image_url) VALUES $valuesSql;"
+
+    if ($DryRun) {
+        Write-Host "  [DryRun] SQL chapter_pages:"
+        Write-Host "  $sqlPages"
+    } else {
+        wrangler d1 execute $DBName --remote --command $sqlPages
+        Write-Host "  chapter_pages inserted ($pageCount rows)"
+    }
+
+    Write-Host "Done: $chapterId"
 }
 
-wrangler r2 object put "$R2Bucket/chapters/001/thumbnail.png" `
-    --file "$ImageDir/thumbnail.png"
-
-Write-Host "✅ 图片上传完成"
-
-# -------------------------------
-# 2. 写入 D1：chapters
-# -------------------------------
-Write-Host "`n🗄️ [2/4] 写入章节数据到 D1（chapters）..."
-
-$sqlChapter = @"
-INSERT OR IGNORE INTO chapters
-(id, title, description, thumbnail_url, page_count, published_at)
-VALUES
-('$ChapterId', '$ChapterTitle', '$ChapterDesc',
- 'chapters/001/thumbnail.png', 3, CURRENT_TIMESTAMP);
-"@
-
-wrangler d1 execute $DBName --remote --command "$sqlChapter"
-Write-Host "✅ chapters 表写入完成"
-
-# -------------------------------
-# 3. 写入 D1：chapter_pages
-# -------------------------------
-Write-Host "`n🗄️ [3/4] 写入分页数据到 D1（chapter_pages）..."
-
-$sqlPages = @"
-INSERT OR IGNORE INTO chapter_pages
-(chapter_id, page_number, image_url)
-VALUES
-('$ChapterId', 1, 'chapters/001/001.png'),
-('$ChapterId', 2, 'chapters/001/002.png'),
-('$ChapterId', 3, 'chapters/001/003.png');
-"@
-
-wrangler d1 execute $DBName --remote --command "$sqlPages"
-Write-Host "✅ chapter_pages 表写入完成"
-
-# -------------------------------
-# 4. 完成
-# -------------------------------
-Write-Host "`n🎉 单话部署完成！" -ForegroundColor Green
-Write-Host "📚 章节 ID: $ChapterId"
-Write-Host "🖼️ 示例图片:"
-Write-Host "https://221f5aa86b9529a869fe31932dafe3dc.r2.cloudflarestorage.com/r2-lovegame/chapters/001/001.png"
+Write-Host ""
+Write-Host "All chapters deployed successfully."

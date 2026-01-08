@@ -60,7 +60,7 @@ export default function ChapterPage({ chapter, prevChapter, nextChapter }: Chapt
           </div>
 
           {/* 漫画阅读器 */}
-          <div className="manga-reader" style={{ height: 'calc(100vh - 200px)' }}>
+          <div className="manga-reader h-[calc(100vh-80px)]">
             {chapter.pages && chapter.pages.length > 0 && (
               <MangaViewer
                 pages={chapter.pages}
