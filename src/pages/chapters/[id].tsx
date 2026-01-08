@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Layout from '@/components/layout/Layout'
+import MangaViewer from '@/components/manga/MangaViewer'
 import { getChapterById, getAllChapters } from '@/lib/api'
 
 interface ChapterPageProps {
@@ -14,8 +15,6 @@ interface ChapterPageProps {
 
 export default function ChapterPage({ chapter, prevChapter, nextChapter }: ChapterPageProps) {
   const router = useRouter()
-  const [currentPage, setCurrentPage] = useState(0)
-  const [isLoading, setIsLoading] = useState(false)
 
   if (!chapter) {
     return (
@@ -28,19 +27,6 @@ export default function ChapterPage({ chapter, prevChapter, nextChapter }: Chapt
         </div>
       </Layout>
     )
-  }
-
-  const totalPages = chapter.pages?.length || 0
-
-  const goToPage = (page: number) => {
-    if (page >= 0 && page < totalPages) {
-      setIsLoading(true)
-      setTimeout(() => {
-        setCurrentPage(page)
-        setIsLoading(false)
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-      }, 100)
-    }
   }
 
   const goToPrevChapter = () => {
@@ -63,131 +49,48 @@ export default function ChapterPage({ chapter, prevChapter, nextChapter }: Chapt
       </Head>
 
       <Layout>
-        <div className="container-responsive py-8">
+        <div className="container-responsive py-4">
           {/* 章节标题 */}
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">{chapter.title}</h1>
-            <p className="text-gray-600">
-              发布时间：{new Date(chapter.publishDate).toLocaleDateString('zh-CN')}
+          <div className="text-center mb-4">
+            <h1 className="text-2xl font-bold text-gray-900">{chapter.title}</h1>
+            <p className="text-gray-600 text-sm">
+              发布时间：{new Date(chapter.publishDate).toLocaleDateString('zh-CN')} |
+              共 {chapter.pages?.length || 0} 页
             </p>
           </div>
 
-          {/* 导航按钮 */}
-          <div className="flex justify-between items-center mb-6">
-            <button
-              onClick={goToPrevChapter}
-              disabled={!prevChapter}
-              className="btn btn-secondary disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              ← 上一章
-            </button>
-            
-            <div className="text-center">
-              <span className="text-gray-600">
-                第 {currentPage + 1} 页 / 共 {totalPages} 页
-              </span>
-            </div>
-            
-            <button
-              onClick={goToNextChapter}
-              disabled={!nextChapter}
-              className="btn btn-secondary disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              下一章 →
-            </button>
-          </div>
-
           {/* 漫画阅读器 */}
-          <div className="manga-reader">
-            {isLoading && (
-              <div className="flex justify-center items-center h-96">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
-              </div>
-            )}
-            
-            {!isLoading && chapter.pages && chapter.pages.length > 0 && (
-              <div className="relative">
-                <img
-                  src={chapter.pages[currentPage]}
-                  alt={`第 ${currentPage + 1} 页`}
-                  className="manga-page w-full"
-                  onLoad={(e) => {
-                    e.currentTarget.setAttribute('data-loaded', 'true')
-                  }}
-                />
-                
-                {/* 页面导航 */}
-                <div className="flex justify-between items-center mt-6">
-                  <button
-                    onClick={() => goToPage(currentPage - 1)}
-                    disabled={currentPage === 0}
-                    className="btn btn-secondary disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    上一页
-                  </button>
-                  
-                  <div className="flex space-x-2">
-                    {[...Array(Math.min(5, totalPages))].map((_, index) => {
-                      let pageNum
-                      if (totalPages <= 5) {
-                        pageNum = index
-                      } else if (currentPage < 2) {
-                        pageNum = index
-                      } else if (currentPage > totalPages - 3) {
-                        pageNum = totalPages - 5 + index
-                      } else {
-                        pageNum = currentPage - 2 + index
-                      }
-                      
-                      return (
-                        <button
-                          key={pageNum}
-                          onClick={() => goToPage(pageNum)}
-                          className={`w-8 h-8 rounded ${
-                            pageNum === currentPage
-                              ? 'bg-primary-600 text-white'
-                              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                          }`}
-                        >
-                          {pageNum + 1}
-                        </button>
-                      )
-                    })}
-                  </div>
-                  
-                  <button
-                    onClick={() => goToPage(currentPage + 1)}
-                    disabled={currentPage === totalPages - 1}
-                    className="btn btn-secondary disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    下一页
-                  </button>
-                </div>
-              </div>
+          <div className="manga-reader" style={{ height: 'calc(100vh - 200px)' }}>
+            {chapter.pages && chapter.pages.length > 0 && (
+              <MangaViewer
+                pages={chapter.pages}
+                title={chapter.title}
+                onNextChapter={goToNextChapter}
+                onPrevChapter={goToPrevChapter}
+                hasNextChapter={!!nextChapter}
+                hasPrevChapter={!!prevChapter}
+              />
             )}
           </div>
 
           {/* 章节导航 */}
-          <div className="flex justify-between items-center mt-12 pt-8 border-t border-gray-200">
-            <button
-              onClick={goToPrevChapter}
-              disabled={!prevChapter}
-              className="btn btn-secondary disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              ← 上一章
-            </button>
-            
+          <div className="flex justify-between items-center py-4 border-t border-gray-200">
             <Link href="/chapters" className="btn btn-primary">
               返回目录
             </Link>
             
-            <button
-              onClick={goToNextChapter}
-              disabled={!nextChapter}
-              className="btn btn-secondary disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              下一章 →
-            </button>
+            <div className="flex space-x-4">
+              {prevChapter && (
+                <Link href={`/chapters/${prevChapter.id}`} className="btn btn-secondary">
+                  ← 上一章
+                </Link>
+              )}
+              {nextChapter && (
+                <Link href={`/chapters/${nextChapter.id}`} className="btn btn-secondary">
+                  下一章 →
+                </Link>
+              )}
+            </div>
           </div>
 
         </div>

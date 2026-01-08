@@ -48,16 +48,6 @@ CREATE TABLE IF NOT EXISTS characters (
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- 评论表（使用Giscus集成，这里存储基础信息）
-CREATE TABLE IF NOT EXISTS comments (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  discussion_id TEXT NOT NULL,
-  category_id TEXT,
-  title TEXT,
-  url TEXT,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-
 -- 站点配置表
 CREATE TABLE IF NOT EXISTS site_config (
   key TEXT PRIMARY KEY,
@@ -76,11 +66,7 @@ CREATE INDEX IF NOT EXISTS idx_characters_name ON characters(name);
 INSERT OR IGNORE INTO site_config (key, value, description) VALUES
 ('site_title', '愛してるゲームを終わらせたい', '网站标题'),
 ('site_description', '漫画同好网站 - 提供最新漫画情报、章节阅读和人物介绍', '网站描述'),
-('site_keywords', '漫画,同好,愛してるゲームを終わらせたい,漫画资源', '网站关键词'),
-('giscus_repo', 'your-username/manga-fans-site', 'Giscus评论仓库名'),
-('giscus_repo_id', 'your-repo-id', 'Giscus仓库ID'),
-('giscus_category', 'General', 'Giscus评论分类'),
-('giscus_category_id', 'your-category-id', 'Giscus分类ID');
+('site_keywords', '漫画,同好,愛してるゲームを終わらせたい,漫画资源', '网站关键词');
 
 -- 插入示例数据
 INSERT OR IGNORE INTO chapters (id, title, description, page_count) VALUES
