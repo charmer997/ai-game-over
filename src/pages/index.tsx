@@ -39,7 +39,7 @@ export default function HomePage({ chapters, news }: HomePageProps) {
       </Layout>
     )
   }
-
+  
   return (
     <>
       <Head>
@@ -56,8 +56,15 @@ export default function HomePage({ chapters, news }: HomePageProps) {
 
       <Layout>
         {/* 头栏区域 */}
-        <section className=" from-primary-600 to-primary-700 text-white">
-          <div className="container-responsive py-16">
+        <section className="relative from-primary-600 to-primary-700 text-white">
+          <div className="absolute inset-0">
+            <img
+              src="/images/cover.jpg"
+              alt="封面图"
+              className="w-full h-full object-cover opacity-30"
+            />
+          </div>
+          <div className="relative container-responsive py-16">
             <div className="flex flex-col items-center justify-center text-center">
               <img
                 src="/logo.webp"

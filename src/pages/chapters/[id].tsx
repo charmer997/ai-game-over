@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Layout from '@/components/layout/Layout'
-import CommentSection from '@/components/comments/CommentSection'
 import { getChapterById, getAllChapters } from '@/lib/api'
 
 interface ChapterPageProps {
@@ -191,11 +190,6 @@ export default function ChapterPage({ chapter, prevChapter, nextChapter }: Chapt
             </button>
           </div>
 
-          {/* 评论区 */}
-          <CommentSection
-            title={chapter.title}
-            identifier={`chapter-${chapter.id}`}
-          />
         </div>
       </Layout>
     </>

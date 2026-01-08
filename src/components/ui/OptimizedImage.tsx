@@ -24,7 +24,7 @@ export default function OptimizedImage({
   height,
   className = '',
   priority = false,
-  fallback = '/images/placeholder.jpg',
+  fallback = '/images/cover.jpg',
   unoptimized = true // GitHub Pages环境下需要禁用优化
 }: OptimizedImageProps) {
   const [imgSrc, setImgSrc] = useState(getImageUrl(src))

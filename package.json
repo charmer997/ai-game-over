@@ -7,28 +7,41 @@
     "build": "next build",
     "export": "next export",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "cf:dev": "wrangler pages dev public --compatibility-date=2024-01-01",
+    "cf:deploy": "wrangler pages deploy public --project-name=manga-fans-site",
+    "d1:create": "wrangler d1 create manga-fans-db",
+    "d1:migrate": "wrangler d1 execute manga-fans-db --file=schema.sql",
+    "d1:local": "wrangler d1 execute manga-fans-db --local --file=schema.sql",
+    "r2:create": "wrangler r2 bucket create manga-fans-assets",
+    "migrate-data": "node scripts/migrate-data.js",
+    "upload-assets": "node scripts/upload-to-r2.js",
+    "migrate": "npm run migrate-data && npm run upload-assets",
+    "setup": "npm run d1:create && npm run r2:create && npm run migrate"
   },
   "dependencies": {
-    "next": "14.0.0",
-    "react": "^18",
-    "react-dom": "^18",
-    "tailwindcss": "^3.3.0",
-    "autoprefixer": "^10.0.1",
-    "postcss": "^8",
-    "gray-matter": "^4.0.3",
-    "remark": "^14.0.2",
-    "remark-html": "^15.0.1",
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
-    "clsx": "^2.0.0"
+    "autoprefixer": "^10.0.1",
+    "clsx": "^2.0.0",
+    "date-fns": "^4.1.0",
+    "gray-matter": "^4.0.3",
+    "itty-router": "^4.0.25",
+    "next": "14.0.0",
+    "postcss": "^8",
+    "react": "^18",
+    "react-dom": "^18",
+    "remark": "^14.0.2",
+    "remark-html": "^15.0.1",
+    "tailwindcss": "^3.3.0"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
-    "eslint-config-next": "14.0.0"
+    "eslint-config-next": "14.0.0",
+    "typescript": "^5",
+    "wrangler": "^3.0.0"
   }
 }

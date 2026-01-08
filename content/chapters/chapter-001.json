@@ -1,12 +1,14 @@
-{
-  "id": "chapter-001",
-  "title": "第1话：开端",
-  "publishDate": "2024-01-01",
-  "description": "故事的开端，主角的冒险从这里开始",
-  "thumbnail": "/images/chapters/001/thumbnail.jpg",
-  "pages": [
-    "/images/chapters/001/page-001.jpg",
-    "/images/chapters/001/page-002.jpg",
-    "/images/chapters/001/page-003.jpg"
-  ]
-}
+
+  {
+    "id": "chapter-001",
+    "title": "第1话：青梅竹马想要测试",
+    "publishDate": "2026-01-08",
+    "description": "test",
+    "thumbnail": "/images/chapters/001/thumbnail.png",
+    "pages": [
+      "/images/chapters/001/001.png",
+      "/images/chapters/001/002.png",
+      "/images/chapters/001/003.png"
+    ]
+  }
+

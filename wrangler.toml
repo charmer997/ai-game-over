@@ -1,0 +1,10 @@
+name = "lovegame"
+compatibility_date = "2026-01-08"
+
+# Pages 静态输出目录
+pages_build_output_dir = "out"
+
+# Pages 只支持这一层 vars
+[vars]
+SITE_URL = "https://aishiterugame.dpdns.org"
+ENVIRONMENT = "production"

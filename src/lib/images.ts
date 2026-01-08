@@ -27,8 +27,8 @@ export interface ImagePaths {
  */
 export const IMAGE_PATHS: ImagePaths = {
   chapters: {
-    thumbnail: (chapterId: string) => `/images/chapters/${chapterId}/thumbnail.jpg`,
-    page: (chapterId: string, pageId: string) => `/images/chapters/${chapterId}/${pageId}.jpg`
+    thumbnail: (chapterId: string) => `/images/chapters/${chapterId}/thumbnail.png`,
+    page: (chapterId: string, pageId: string) => `/images/chapters/${chapterId}/${pageId}.png`
   },
   news: {
     thumbnail: (newsId: string) => `/images/news/${newsId}.jpg`
@@ -61,7 +61,7 @@ export const getLazyLoadProps = (src: string, alt: string) => ({
   decoding: 'async' as const,
   onError: (e: React.SyntheticEvent<HTMLImageElement>) => {
     const target = e.target as HTMLImageElement
-    target.src = '/images/placeholder.jpg' // 备用图片
+    target.src = '/images/cover.jpg' // 使用封面图作为备用图片
   }
 })
 
