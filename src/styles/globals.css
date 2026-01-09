@@ -8,6 +8,10 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* iOS Safari 滚动优化 */
+    -webkit-overflow-scrolling: touch;
+    /* 防止iOS Safari橡皮筋效果 */
+    overscroll-behavior: contain;
   }
   
   body {
@@ -15,6 +19,10 @@
     font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* iOS Safari 全屏优化 */
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    /* 防止iOS Safari缩放 */
+    touch-action: manipulation;
   }
   
   /* 图片加载优化 */
@@ -58,10 +66,26 @@
   /* 漫画阅读器样式 */
   .manga-reader {
     @apply max-w-4xl mx-auto;
+    /* Safari 优化 */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    /* 防止Safari内存泄漏 */
+    will-change: transform;
   }
   
   .manga-page {
     @apply w-full mb-4 rounded-lg shadow-sm;
+    /* Safari 图片渲染优化 */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    /* 高质量图片渲染 */
+    image-rendering: -webkit-optimize-contrast;
+    /* 防止Safari图片模糊 */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    /* 提高图片清晰度 */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   
   /* 导航样式 */
@@ -121,4 +145,60 @@
   .dark-mode-auto {
     @apply bg-gray-900 text-gray-100;
   }
+}
+
+/* Safari/iOS 特定优化 */
+@supports (-webkit-touch-callout: none) {
+  /* iOS Safari 特定样式 */
+  body {
+    /* 防止iOS Safari长按弹出菜单 */
+    -webkit-touch-callout: none;
+    /* 防止iOS Safari选择文本 */
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  
+  /* 允许特定区域选择文本 */
+  .selectable {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+  
+  /* iOS Safari 全屏模式优化 */
+  .fullscreen-ios {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  /* iOS Safari 滚动优化 */
+  .scroll-container {
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+  }
+  
+  /* iOS Safari 触摸优化 */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Safari 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.5);
 }

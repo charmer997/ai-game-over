@@ -49,7 +49,8 @@ export default function ChapterPage({ chapter, prevChapter, nextChapter }: Chapt
       </Head>
 
       <Layout>
-        <div className="container-responsive py-4">
+        {/* 桌面端显示标题和导航 */}
+        <div className="hidden md:block container-responsive py-4">
           {/* 章节标题 */}
           <div className="text-center mb-4">
             <h1 className="text-2xl font-bold text-gray-900">{chapter.title}</h1>
@@ -58,42 +59,42 @@ export default function ChapterPage({ chapter, prevChapter, nextChapter }: Chapt
               共 {chapter.pages?.length || 0} 页
             </p>
           </div>
+        </div>
 
-          {/* 漫画阅读器 */}
-          <div className="manga-reader h-[calc(100vh-80px)]">
-            {chapter.pages && chapter.pages.length > 0 && (
-              <MangaViewer
-                pages={chapter.pages}
-                title={chapter.title}
-                onNextChapter={goToNextChapter}
-                onPrevChapter={goToPrevChapter}
-                hasNextChapter={!!nextChapter}
-                hasPrevChapter={!!prevChapter}
-              />
+        {/* 漫画阅读器 - 全屏显示 */}
+        <div className="manga-reader h-[calc(100vh-60px)] md:h-screen">
+          {chapter.pages && chapter.pages.length > 0 && (
+            <MangaViewer
+              pages={chapter.pages}
+              title={chapter.title}
+              onNextChapter={goToNextChapter}
+              onPrevChapter={goToPrevChapter}
+              hasNextChapter={!!nextChapter}
+              hasPrevChapter={!!prevChapter}
+            />
+          )}
+        </div>
+
+        {/* 桌面端底部导航 */}
+        <div className="hidden md:flex justify-between items-center py-4 border-t border-gray-200 container-responsive">
+          <Link href="/chapters" className="btn btn-primary">
+            返回目录
+          </Link>
+          
+          <div className="flex space-x-4">
+            {prevChapter && (
+              <Link href={`/chapters/${prevChapter.id}`} className="btn btn-secondary">
+                ← 上一章
+              </Link>
+            )}
+            {nextChapter && (
+              <Link href={`/chapters/${nextChapter.id}`} className="btn btn-secondary">
+                下一章 →
+              </Link>
             )}
           </div>
-
-          {/* 章节导航 */}
-          <div className="flex justify-between items-center py-4 border-t border-gray-200">
-            <Link href="/chapters" className="btn btn-primary">
-              返回目录
-            </Link>
-            
-            <div className="flex space-x-4">
-              {prevChapter && (
-                <Link href={`/chapters/${prevChapter.id}`} className="btn btn-secondary">
-                  ← 上一章
-                </Link>
-              )}
-              {nextChapter && (
-                <Link href={`/chapters/${nextChapter.id}`} className="btn btn-secondary">
-                  下一章 →
-                </Link>
-              )}
-            </div>
-          </div>
-
         </div>
+
       </Layout>
     </>
   )

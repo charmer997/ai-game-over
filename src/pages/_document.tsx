@@ -4,6 +4,15 @@ export default function Document() {
   return (
     <Html lang="zh-CN">
       <Head>
+        {/* 移动设备优化 */}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+        
+        {/* Safari/iOS优化 */}
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="恋爱游戏" />
+        <meta name="format-detection" content="telephone=no" />
+        
         {/* 性能优化：预连接到外部域名 */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -12,8 +21,7 @@ export default function Document() {
         <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         
         {/* SEO优化 */}
-        <meta name="theme-color" content="#3b82f6" />
-  
+        <meta name="theme-color" content="#000000" />
         
         {/* PWA支持（预留） */}
         <link rel="manifest" href="/manifest.json" />
