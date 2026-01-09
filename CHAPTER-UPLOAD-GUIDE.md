@@ -1,192 +1,332 @@
 # 章节添加指南
 
-本指南将帮助您添加新的漫画章节到网站中。
+本指南将帮助您了解如何向漫画网站添加新章节，包括图片上传、数据配置和部署流程。
 
 ## 目录结构
 
-每个章节需要以下文件和目录结构：
+在添加新章节之前，请了解项目的目录结构：
 
 ```
-content/chapters/
-├── chapter-001.json
-├── chapter-002.json
-└── ...
+public/
+├── images/
+│   ├── cover.jpg              # 网站封面图
+│   ├── chapters/              # 章节图片目录
+│   │   ├── 001/               # 第1章图片
+│   │   │   ├── 001.png        # 第1页
+│   │   │   ├── 002.png        # 第2页
+│   │   │   └── thumbnail.png  # 章节缩略图
+│   │   └── 002/               # 第2章图片
+│   │       ├── 001.png
+│   │       ├── 002.png
+│   │       └── thumbnail.png
+│   ├── news/                  # 新闻图片
+│   └── characters/            # 角色图片
 
-public/images/chapters/
-├── 001/
-│   ├── 001.png
-│   ├── 002.png
-│   ├── 003.png
-│   └── thumbnail.png
-├── 002/
-│   ├── 001.png
-│   ├── 002.png
-│   └── thumbnail.png
-└── ...
+content/
+├── chapters/                  # 章节数据
+│   ├── chapter-001.json       # 第1章数据
+│   └── chapter-002.json       # 第2章数据
+├── characters/                # 角色数据
+└── news/                      # 新闻数据
 ```
 
-## 添加新章节的步骤
+## 添加新章节步骤
 
-### 1. 创建章节数据文件
+### 1. 准备章节图片
 
-在 `content/chapters/` 目录下创建新的JSON文件，命名为 `chapter-XXX.json`（XXX为章节编号，如002、003等）。
+1. **图片格式**：使用 PNG 格式（推荐）或 JPG 格式
+2. **图片命名**：按顺序命名，如 `001.png`, `002.png`, `003.png`...
+3. **图片优化**：确保图片大小适中，建议单张图片不超过 500KB
+4. **缩略图**：为每个章节创建一个 `thumbnail.png` 缩略图
 
-文件格式示例：
+### 2. 创建章节目录
+
+假设您要添加第10章：
+
+```bash
+# 在 public/images/chapters/ 目录下创建新章节文件夹
+mkdir -p public/images/chapters/010
+```
+
+### 3. 上传图片
+
+将准备好的图片文件上传到对应的章节目录：
+
+```bash
+# 示例：将图片复制到第10章目录
+cp /path/to/your/images/*.png public/images/chapters/010/
+```
+
+确保目录结构如下：
+
+```
+public/images/chapters/010/
+├── 001.png
+├── 002.png
+├── 003.png
+└── thumbnail.png
+```
+
+### 4. 创建章节数据文件
+
+在 `content/chapters/` 目录下创建新的 JSON 文件：
+
+```bash
+# 创建第10章的数据文件
+touch content/chapters/chapter-010.json
+```
+
+编辑 `chapter-010.json` 文件，添加以下内容：
 
 ```json
 {
-  "id": "chapter-002",
-  "title": "第2话：标题",
-  "publishDate": "2024-01-08",
-  "description": "章节描述",
-  "thumbnail": "/images/chapters/002/thumbnail.png",
+  "id": "010",
+  "title": "第10章：章节标题",
+  "description": "本章内容简介...",
+  "thumbnail": "/images/chapters/010/thumbnail.png",
   "pages": [
-    "/images/chapters/002/001.png",
-    "/images/chapters/002/002.png",
-    "/images/chapters/002/003.png"
-  ]
+    "/images/chapters/010/001.png",
+    "/images/chapters/010/002.png",
+    "/images/chapters/010/003.png"
+  ],
+  "publishDate": "2023-10-01",
+  "tags": ["主线剧情", "战斗"],
+  "volume": 2,
+  "chapterNumber": 10
 }
 ```
 
-**字段说明：**
-- `id`: 章节唯一标识符，格式为 `chapter-XXX`
-- `title`: 章节标题
-- `publishDate`: 发布日期，格式为 `YYYY-MM-DD`
-- `description`: 章节描述（可选）
-- `thumbnail`: 缩略图路径
-- `pages`: 页面图片路径数组
+### 5. 更新卷册信息（可选）
 
-### 2. 准备图片文件
+如果您使用卷册分类系统，需要更新 `src/lib/volumes.ts` 文件：
 
-在 `public/images/chapters/` 目录下创建对应的章节文件夹（如002、003等）。
-
-**图片要求：**
-- 所有图片必须是 `.png` 格式
-- 页面图片命名为 `001.png`, `002.png`, `003.png` 等（三位数字）
-- 缩略图命名为 `thumbnail.png`
-- 建议图片宽度不超过1200px，以优化加载速度
-
-### 3. 批量添加章节（1-60话）
-
-如果您要添加1-60话的大量章节，可以按以下步骤操作：
-
-#### 步骤1：创建目录结构
-
-```bash
-# 在public/images/chapters/下创建001-060的目录
-mkdir public/images/chapters/{001..060}
-```
-
-#### 步骤2：准备图片文件
-
-将每个章节的图片文件放入对应目录：
-- 章节001的图片放入 `public/images/chapters/001/`
-- 章节002的图片放入 `public/images/chapters/002/`
-- 以此类推...
-
-#### 步骤3：创建章节数据文件
-
-您可以使用以下脚本批量创建章节数据文件：
-
-```javascript
-// 在项目根目录创建 generate-chapters.js
-const fs = require('fs');
-const path = require('path');
-
-// 生成1-60话的章节数据
-for (let i = 1; i <= 60; i++) {
-  const chapterNum = String(i).padStart(3, '0');
-  const chapterData = {
-    id: `chapter-${chapterNum}`,
-    title: `第${i}话：`,
-    publishDate: "2024-01-01", // 可以根据实际发布日期调整
-    description: "",
-    thumbnail: `/images/chapters/${chapterNum}/thumbnail.png`,
-    pages: []
-  };
-  
-  // 假设每话有20页（根据实际情况调整）
-  for (let j = 1; j <= 20; j++) {
-    const pageNum = String(j).padStart(3, '0');
-    chapterData.pages.push(`/images/chapters/${chapterNum}/${pageNum}.png`);
-  }
-  
-  // 写入文件
-  const filePath = path.join('content/chapters', `chapter-${chapterNum}.json`);
-  fs.writeFileSync(filePath, JSON.stringify(chapterData, null, 2));
-  
-  console.log(`Created: ${filePath}`);
+```typescript
+// 在相应的卷册中添加新章节
+{
+  id: 'volume-2',
+  title: '第二卷',
+  description: '第8-14话',
+  chapters: ['008', '009', '010', '011', '012', '013', '014'],
+  cover: '/images/volumes/volume-2-cover.jpg'
 }
 ```
 
-运行脚本：
+### 6. 测试本地效果
+
+在部署之前，先在本地测试：
+
 ```bash
-node generate-chapters.js
+# 启动开发服务器
+npm run dev
+
+# 访问 http://localhost:3000 查看效果
 ```
 
-### 4. 验证章节
+### 7. 部署到 Cloudflare Pages
 
-添加章节后，您可以通过以下方式验证：
-
-1. **本地验证**：
-   ```bash
-   npm run dev
-   ```
-   访问 `http://localhost:3000/chapters` 查看章节列表
-
-2. **检查图片路径**：
-   确保所有图片文件存在且路径正确
-
-3. **检查JSON格式**：
-   确保章节数据文件格式正确
-
-### 5. 部署更新
-
-完成章节添加后，使用部署脚本更新网站：
+使用提供的部署脚本：
 
 ```bash
 # Windows
-scripts/pages-deploy.bat
+./scripts/deploy.bat
 
 # Linux/Mac
-scripts/pages-deploy.sh
+./scripts/deploy.sh
 ```
 
-## 注意事项
+或者手动部署：
 
-1. **图片格式**：所有图片必须是 `.png` 格式
-2. **文件命名**：页面图片必须使用三位数字命名（001.png, 002.png等）
-3. **路径一致性**：确保JSON中的图片路径与实际文件路径一致
-4. **性能优化**：大图片会影响加载速度，建议适当压缩
-5. **备份**：添加大量章节前建议备份现有数据
+```bash
+# 构建项目
+npm run build
+
+# 部署到 Cloudflare Pages
+npm run deploy
+```
+
+## 批量添加章节
+
+如果您需要一次性添加多个章节，可以使用以下脚本：
+
+### 创建批量上传脚本
+
+创建 `scripts/batch-upload.sh`：
+
+```bash
+#!/bin/bash
+
+# 设置起始和结束章节号
+START_CHAPTER=11
+END_CHAPTER=15
+
+# 循环创建章节
+for i in $(seq $START_CHAPTER $END_CHAPTER); do
+  # 格式化章节号为三位数
+  CHAPTER_NUM=$(printf "%03d" $i)
+  
+  # 创建目录
+  mkdir -p "public/images/chapters/$CHAPTER_NUM"
+  
+  # 创建数据文件
+  cat > "content/chapters/chapter-$CHAPTER_NUM.json" << EOF
+{
+  "id": "$CHAPTER_NUM",
+  "title": "第${i}章：章节标题",
+  "description": "本章内容简介...",
+  "thumbnail": "/images/chapters/$CHAPTER_NUM/thumbnail.png",
+  "pages": [],
+  "publishDate": "$(date +%Y-%m-%d)",
+  "tags": ["主线剧情"],
+  "volume": $(( (i - 1) / 7 + 1 )),
+  "chapterNumber": $i
+}
+EOF
+
+  echo "Created chapter $CHAPTER_NUM"
+done
+
+echo "Batch chapter creation completed!"
+```
+
+## 图片优化建议
+
+### 1. 图片压缩
+
+使用工具压缩图片以减少加载时间：
+
+```bash
+# 使用 ImageMagick 批量压缩
+mogrify -resize 1200x1800 -quality 85 public/images/chapters/010/*.png
+
+# 使用 pngquant 优化 PNG
+pngquant --quality=65-80 --output public/images/chapters/010/ --ext .png public/images/chapters/010/*.png
+```
+
+### 2. WebP 格式（可选）
+
+考虑使用 WebP 格式以进一步减小文件大小：
+
+```bash
+# 转换为 WebP
+cwebp -q 80 public/images/chapters/010/001.png -o public/images/chapters/010/001.webp
+```
 
 ## 常见问题
 
-### Q: 图片不显示怎么办？
-A: 检查以下几点：
-- 图片文件是否存在
-- 文件名是否正确（包括大小写）
-- 路径是否与JSON中一致
-- 图片格式是否为.png
+### 1. 图片不显示
 
-### Q: 章节顺序不对怎么办？
-A: 章节按 `publishDate` 降序排列，可以调整发布日期来改变顺序。
+- 检查图片路径是否正确
+- 确认图片文件名与 JSON 中的路径一致
+- 检查图片文件是否存在
 
-### Q: 如何批量重命名图片？
-A: 可以使用以下脚本（Linux/Mac）：
-```bash
-# 在章节目录中执行
-for i in *.jpg; do
-  new_name=$(printf "%03d.png" "${i%.*}")
-  mv "$i" "$new_name"
-done
+### 2. 章节不显示在列表中
+
+- 检查 JSON 文件格式是否正确
+- 确认章节 ID 是否唯一
+- 检查卷册配置（如果使用）
+
+### 3. 部署后图片 404
+
+- 确认图片已包含在构建中
+- 检查 public 目录结构
+- 重新部署项目
+
+## 自动化工具
+
+### 1. 章节生成器脚本
+
+创建 `scripts/generate-chapter.js`：
+
+```javascript
+const fs = require('fs');
+const path = require('path');
+
+function generateChapter(chapterNumber, title, description, tags = []) {
+  const chapterId = chapterNumber.toString().padStart(3, '0');
+  const volume = Math.ceil(chapterNumber / 7);
+  
+  const chapterData = {
+    id: chapterId,
+    title: `第${chapterNumber}章：${title}`,
+    description,
+    thumbnail: `/images/chapters/${chapterId}/thumbnail.png`,
+    pages: [],
+    publishDate: new Date().toISOString().split('T')[0],
+    tags,
+    volume,
+    chapterNumber: chapterNumber
+  };
+  
+  // 创建目录
+  const chapterDir = path.join('public/images/chapters', chapterId);
+  if (!fs.existsSync(chapterDir)) {
+    fs.mkdirSync(chapterDir, { recursive: true });
+  }
+  
+  // 写入 JSON 文件
+  const jsonPath = path.join('content/chapters', `chapter-${chapterId}.json`);
+  fs.writeFileSync(jsonPath, JSON.stringify(chapterData, null, 2));
+  
+  console.log(`Generated chapter ${chapterId}`);
+}
+
+// 使用示例
+generateChapter(16, '新的开始', '故事进入新阶段...', ['主线剧情', '转折']);
 ```
 
-## 联系支持
+### 2. 图片上传脚本
 
-如果在添加章节过程中遇到问题，请检查：
-1. 控制台错误信息
-2. 网络请求状态
-3. 文件权限
+创建 `scripts/upload-images.js`：
 
-需要进一步帮助，请提供详细的错误信息和操作步骤。
+```javascript
+const fs = require('fs');
+const path = require('path');
+
+function uploadImages(chapterNumber, imageDir) {
+  const chapterId = chapterNumber.toString().padStart(3, '0');
+  const targetDir = path.join('public/images/chapters', chapterId);
+  
+  // 创建目标目录
+  if (!fs.existsSync(targetDir)) {
+    fs.mkdirSync(targetDir, { recursive: true });
+  }
+  
+  // 复制图片
+  const files = fs.readdirSync(imageDir);
+  const imageFiles = files.filter(file => /\.(png|jpg|jpeg)$/i.test(file));
+  
+  imageFiles.forEach(file => {
+    const srcPath = path.join(imageDir, file);
+    const destPath = path.join(targetDir, file);
+    fs.copyFileSync(srcPath, destPath);
+    console.log(`Copied ${file} to chapter ${chapterId}`);
+  });
+  
+  // 更新章节数据
+  const jsonPath = path.join('content/chapters', `chapter-${chapterId}.json`);
+  if (fs.existsSync(jsonPath)) {
+    const chapterData = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+    chapterData.pages = imageFiles.map(file => `/images/chapters/${chapterId}/${file}`);
+    fs.writeFileSync(jsonPath, JSON.stringify(chapterData, null, 2));
+    console.log(`Updated chapter ${chapterId} data`);
+  }
+}
+
+// 使用示例
+// uploadImages(16, '/path/to/chapter16/images');
+```
+
+## 最佳实践
+
+1. **命名规范**：保持一致的命名规范，使用三位数字编号
+2. **图片优化**：始终优化图片大小以提高加载速度
+3. **数据验证**：在部署前验证 JSON 文件格式
+4. **版本控制**：使用 Git 跟踪所有更改
+5. **备份**：定期备份内容和图片
+6. **测试**：在部署前充分测试新章节
+
+## 总结
+
+通过遵循本指南，您可以轻松地向漫画网站添加新章节。记住要保持文件结构的一致性，优化图片以提高性能，并在部署前进行充分测试。
+
+如果您遇到任何问题，请参考项目的 README.md 文件或联系项目维护者。

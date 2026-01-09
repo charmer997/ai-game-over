@@ -61,7 +61,7 @@ export default function HomePage({ chapters, news }: HomePageProps) {
             <img
               src="/images/cover.jpg"
               alt="封面图"
-              className="w-full h-full object-cover opacity-30"
+              className="w-full h-full object-cover opacity-50"
             />
           </div>
           <div className="relative container-responsive py-16">

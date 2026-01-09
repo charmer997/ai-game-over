@@ -1,5 +1,5 @@
 ---
-title: "漫画即将开始连载"
+title: "漫画即将开始连"
 excerpt: "经过长时间的准备，这部备受期待的漫画终于要开始连载了！"
 publishDate: "2024-01-01"
 thumbnail: "/images/news/first-news.jpg"

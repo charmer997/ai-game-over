@@ -6,5 +6,10 @@ pages_build_output_dir = "out"
 
 # Pages 只支持这一层 vars
 [vars]
-SITE_URL = "https://aishiterugame.dpdns.org"
+SITE_URL = "https://aishiteru-game.online"
 ENVIRONMENT = "production"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "lovegame"
+database_id = "e0b6869a-d8d1-4c9d-8ab0-d80244395cdf"

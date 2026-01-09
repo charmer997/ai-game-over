@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Layout from '@/components/layout/Layout'
 import MangaViewer from '@/components/manga/MangaViewer'
+import CommentSection from '@/components/comments/CommentSection'
 import { getChapterById, getAllChapters } from '@/lib/api'
 
 interface ChapterPageProps {
@@ -93,6 +94,11 @@ export default function ChapterPage({ chapter, prevChapter, nextChapter }: Chapt
               </Link>
             )}
           </div>
+        </div>
+
+        {/* 评论区 */}
+        <div className="container-responsive py-8">
+          <CommentSection title={`${chapter.title} 评论区`} pageId={`/chapters/${chapter.id}`} />
         </div>
 
       </Layout>

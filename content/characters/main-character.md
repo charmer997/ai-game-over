@@ -1,8 +1,8 @@
 ---
-name: "主角"
-title: "勇敢的冒险者"
+name: "浅葱ゆきや"
+title: "男主角"
 avatar: "/images/characters/main-character.jpg"
-firstAppearance: "chapter-001"
+firstAppearance: "第一话"
 age: "16岁"
 gender: "男"
 personality: ["勇敢", "善良", "坚韧", "好奇心强"]

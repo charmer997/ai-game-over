@@ -19,6 +19,12 @@ export interface ImagePaths {
     favicon: () => string
     icons: (iconName: string) => string
   }
+  volumes: {
+    cover: (volumeId: string) => string
+  }
+  cover: {
+    default: () => string
+  }
 }
 
 /**
@@ -28,7 +34,7 @@ export interface ImagePaths {
 export const IMAGE_PATHS: ImagePaths = {
   chapters: {
     thumbnail: (chapterId: string) => `/images/chapters/${chapterId}/thumbnail.png`,
-    page: (chapterId: string, pageId: string) => `/images/chapters/${chapterId}/${pageId}.png`
+    page: (chapterId: string, pageId: string) => `/images/chapters/${chapterId}/${pageId}.jpg`
   },
   news: {
     thumbnail: (newsId: string) => `/images/news/${newsId}.jpg`
@@ -40,6 +46,12 @@ export const IMAGE_PATHS: ImagePaths = {
     logo: () => '/logo.webp',
     favicon: () => '/favicon.ico',
     icons: (iconName: string) => `/icons/${iconName}`
+  },
+  volumes: {
+    cover: (volumeId: string) => `/images/volumes/${volumeId}.jpg`
+  },
+  cover: {
+    default: () => '/images/cover.jpg'
   }
 }
 

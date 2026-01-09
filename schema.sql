@@ -1,87 +1,19 @@
--- 漫画同好网站数据库结构
--- Cloudflare D1 SQLite
-
--- 章节表
-CREATE TABLE IF NOT EXISTS chapters (
-  id TEXT PRIMARY KEY,
-  title TEXT NOT NULL,
-  description TEXT,
-  thumbnail_url TEXT,
-  page_count INTEGER DEFAULT 0,
-  published_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-
--- 章节图片表
-CREATE TABLE IF NOT EXISTS chapter_pages (
+-- D1 数据库表结构
+-- 创建评论表
+CREATE TABLE IF NOT EXISTS comments (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  chapter_id TEXT NOT NULL,
-  page_number INTEGER NOT NULL,
-  image_url TEXT NOT NULL,
-  image_size INTEGER,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (chapter_id) REFERENCES chapters(id) ON DELETE CASCADE,
-  UNIQUE(chapter_id, page_number)
-);
-
--- 新闻表
-CREATE TABLE IF NOT EXISTS news (
-  id TEXT PRIMARY KEY,
-  title TEXT NOT NULL,
   content TEXT NOT NULL,
-  excerpt TEXT,
-  thumbnail_url TEXT,
-  published_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  author TEXT NOT NULL,
+  page_id TEXT NOT NULL,
+  created_at TEXT NOT NULL,
+  updated_at TEXT
 );
 
--- 角色表
-CREATE TABLE IF NOT EXISTS characters (
-  id TEXT PRIMARY KEY,
-  name TEXT NOT NULL,
-  description TEXT,
-  avatar_url TEXT,
-  profile TEXT,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-);
+-- 创建索引以提高查询性能
+CREATE INDEX IF NOT EXISTS idx_comments_page_id ON comments(page_id);
+CREATE INDEX IF NOT EXISTS idx_comments_created_at ON comments(created_at);
 
--- 站点配置表
-CREATE TABLE IF NOT EXISTS site_config (
-  key TEXT PRIMARY KEY,
-  value TEXT NOT NULL,
-  description TEXT,
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-
--- 创建索引
-CREATE INDEX IF NOT EXISTS idx_chapters_published_at ON chapters(published_at DESC);
-CREATE INDEX IF NOT EXISTS idx_chapter_pages_chapter_id ON chapter_pages(chapter_id);
-CREATE INDEX IF NOT EXISTS idx_news_published_at ON news(published_at DESC);
-CREATE INDEX IF NOT EXISTS idx_characters_name ON characters(name);
-
--- 插入默认站点配置
-INSERT OR IGNORE INTO site_config (key, value, description) VALUES
-('site_title', '愛してるゲームを終わらせたい', '网站标题'),
-('site_description', '漫画同好网站 - 提供最新漫画情报、章节阅读和人物介绍', '网站描述'),
-('site_keywords', '漫画,同好,愛してるゲームを終わらせたい,漫画资源', '网站关键词');
-
--- 插入示例数据
-INSERT OR IGNORE INTO chapters (id, title, description, page_count) VALUES
-('chapter-001', '第1话：开始', '故事的开端', 20),
-('chapter-002', '第2话：发展', '剧情的发展', 22);
-
-INSERT OR IGNORE INTO chapter_pages (chapter_id, page_number, image_url) VALUES
-('chapter-001', 1, 'https://your-r2-bucket.workers.dev/chapters/001/001.jpg'),
-('chapter-001', 2, 'https://your-r2-bucket.workers.dev/chapters/001/002.jpg'),
-('chapter-002', 1, 'https://your-r2-bucket.workers.dev/chapters/002/001.jpg'),
-('chapter-002', 2, 'https://your-r2-bucket.workers.dev/chapters/002/002.jpg');
-
-INSERT OR IGNORE INTO news (id, title, content, excerpt) VALUES
-('news-001', '网站上线公告', '欢迎来到我们的漫画同好网站！', '网站正式上线啦！');
-
-INSERT OR IGNORE INTO characters (id, name, description) VALUES
-('character-001', '主角', '故事的主人公'),
-('character-002', '配角', '重要的配角角色');
+-- 示例数据（可选）
+-- INSERT INTO comments (content, author, page_id, created_at) VALUES 
+--   ('这是第一条评论', '访客1', '/chapters/1', '2023-01-01T00:00:00Z'),
+--   ('这是第二条评论', '访客2', '/chapters/1', '2023-01-02T00:00:00Z');

@@ -87,9 +87,11 @@ function MangaViewerDesktopSinglePage({
       if (e.key === 'ArrowRight' || e.key === ' ') {
         e.preventDefault()
         nextPage()
+        // 键盘导航时不显示UI
       } else if (e.key === 'ArrowLeft') {
         e.preventDefault()
         prevPage()
+        // 键盘导航时不显示UI
       }
     }
     window.addEventListener('keydown', onKey)
@@ -107,6 +109,7 @@ function MangaViewerDesktopSinglePage({
       resetUI() // 点击导航后显示UI
     } else {
       setShowUI(v => !v) // 点击中间区域切换UI显示状态
+      resetUI() // 点击中间区域时重置UI计时器
     }
   }
 
@@ -314,9 +317,11 @@ function MangaViewerDoublePage({
       if (e.key === 'ArrowRight' || e.key === ' ') {
         e.preventDefault()
         next()
+        // 键盘导航时不显示UI
       } else if (e.key === 'ArrowLeft') {
         e.preventDefault()
         prev()
+        // 键盘导航时不显示UI
       }
     }
     window.addEventListener('keydown', onKey)
@@ -333,6 +338,7 @@ function MangaViewerDoublePage({
       resetUI() // 点击导航后显示UI
     } else {
       setShowUI(v => !v) // 点击中间区域切换UI显示状态
+      resetUI() // 点击中间区域时重置UI计时器
     }
   }
 
@@ -496,7 +502,7 @@ export default function MangaViewer(props: MangaViewerProps) {
   // 桌面设备根据用户选择显示模式切换按钮
   return (
     <>
-      {/* 模式切换按钮 - 固定在页面右上角，始终可见 */}
+      {/* 模式切换按钮 - 固定在页面右上角，始终可见，不受UI自动隐藏影响 */}
       <div className="fixed top-4 right-4 z-50 flex bg-black/70 rounded-lg p-1">
         <button
           onClick={() => setViewMode('single')}

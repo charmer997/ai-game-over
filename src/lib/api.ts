@@ -1,8 +1,69 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
+import {
+  volumes,
+  extraCategories,
+  extractChapterNumber,
+  isExtraChapter,
+  getAllVolumes as getVolumes,
+  getExtraCategories as getCategories,
+  getChapterVolume,
+  getChapterCategory
+} from './volumes'
 
 const contentDirectory = path.join(process.cwd(), 'content')
+
+// 重新导出卷相关函数和类型
+export { volumes, extraCategories }
+export type { Volume } from './volumes'
+export const getAllVolumes = getVolumes
+export const getExtraCategories = getCategories
+export { getChapterVolume, getChapterCategory }
+
+// 根据单行本ID获取章节
+export function getChaptersByVolume(volumeId: string) {
+  try {
+    const volume = volumes.find(v => v.id === volumeId)
+    if (!volume) return []
+    
+    const allChapters = getAllChapters()
+    
+    return allChapters.filter(chapter => {
+      const chapterNumber = extractChapterNumber(chapter.id)
+      return chapterNumber >= volume.startChapter && chapterNumber <= volume.endChapter
+    }).sort((a, b) => {
+      const aNum = extractChapterNumber(a.id)
+      const bNum = extractChapterNumber(b.id)
+      return aNum - bNum
+    })
+  } catch (error) {
+    console.error(`Error getting chapters for volume ${volumeId}:`, error)
+    return []
+  }
+}
+
+// 获取番外章节
+export function getExtraChapters(categoryId: string = 'extra') {
+  try {
+    const allChapters = getAllChapters()
+    
+    if (categoryId === 'extra') {
+      // 返回番外章节，目前只有20.2话
+      return allChapters.filter(chapter =>
+        isExtraChapter(chapter.id) && chapter.id === 'chapter-20.2'
+      )
+    } else if (categoryId === 'fanbox') {
+      // Fanbox章节，暂时为空
+      return []
+    }
+    
+    return []
+  } catch (error) {
+    console.error(`Error getting extra chapters for category ${categoryId}:`, error)
+    return []
+  }
+}
 
 // 获取所有章节
 export function getAllChapters() {
