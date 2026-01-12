@@ -1,9 +1,9 @@
 {
   "id": "chapter-046",
   "title": "第46话",
-  "publishDate": "2026-01-08",
+  "publishDate": "2026-01-12",
   "description": "",
-  "thumbnail": "/images/chapters/第46话/01.jpg",
+  "thumbnail": "/images/chapters/第46话/thumbnail.png",
   "pages": [
     "/images/chapters/第46话/01.jpg",
     "/images/chapters/第46话/02.jpg",
@@ -26,6 +26,7 @@
     "/images/chapters/第46话/19.jpg",
     "/images/chapters/第46话/20.jpg",
     "/images/chapters/第46话/21.jpg",
-    "/images/chapters/第46话/22.jpg"
+    "/images/chapters/第46话/22.jpg",
+    "/images/chapters/第46话/thumbnail.png"
   ]
 }

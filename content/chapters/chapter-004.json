@@ -1,9 +1,9 @@
 {
   "id": "chapter-004",
-  "title": "第04话 青梅竹马紧密连系",
-  "publishDate": "2026-01-08",
+  "title": "第04话",
+  "publishDate": "2026-01-12",
   "description": "",
-  "thumbnail": "/images/chapters/第04话/01.jpg",
+  "thumbnail": "/images/chapters/第04话/thumbnail.png",
   "pages": [
     "/images/chapters/第04话/01.jpg",
     "/images/chapters/第04话/02.jpg",
@@ -24,6 +24,7 @@
     "/images/chapters/第04话/17.jpg",
     "/images/chapters/第04话/18.jpg",
     "/images/chapters/第04话/19.jpg",
-    "/images/chapters/第04话/20.jpg"
+    "/images/chapters/第04话/20.jpg",
+    "/images/chapters/第04话/thumbnail.png"
   ]
 }

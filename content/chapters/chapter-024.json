@@ -1,9 +1,9 @@
 {
   "id": "chapter-024",
   "title": "第24话",
-  "publishDate": "2026-01-08",
+  "publishDate": "2026-01-12",
   "description": "",
-  "thumbnail": "/images/chapters/第24话/01.jpg",
+  "thumbnail": "/images/chapters/第24话/thumbnail.png",
   "pages": [
     "/images/chapters/第24话/01.jpg",
     "/images/chapters/第24话/02.jpg",
@@ -23,6 +23,7 @@
     "/images/chapters/第24话/16-17.jpg",
     "/images/chapters/第24话/18.jpg",
     "/images/chapters/第24话/19.jpg",
-    "/images/chapters/第24话/20.jpg"
+    "/images/chapters/第24话/20.jpg",
+    "/images/chapters/第24话/thumbnail.png"
   ]
 }

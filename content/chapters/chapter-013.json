@@ -1,9 +1,9 @@
 {
   "id": "chapter-013",
-  "title": "第13话 青梅竹马想更进一步",
-  "publishDate": "2026-01-08",
+  "title": "第13话",
+  "publishDate": "2026-01-12",
   "description": "",
-  "thumbnail": "/images/chapters/第13话/01.jpg",
+  "thumbnail": "/images/chapters/第13话/thumbnail.png",
   "pages": [
     "/images/chapters/第13话/01.jpg",
     "/images/chapters/第13话/02.jpg",
@@ -20,6 +20,7 @@
     "/images/chapters/第13话/13.jpg",
     "/images/chapters/第13话/14.jpg",
     "/images/chapters/第13话/15.jpg",
-    "/images/chapters/第13话/16.jpg"
+    "/images/chapters/第13话/16.jpg",
+    "/images/chapters/第13话/thumbnail.png"
   ]
 }

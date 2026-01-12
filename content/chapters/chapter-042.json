@@ -1,9 +1,9 @@
 {
   "id": "chapter-042",
   "title": "第42话",
-  "publishDate": "2026-01-08",
+  "publishDate": "2026-01-12",
   "description": "",
-  "thumbnail": "/images/chapters/第42话/01.jpg",
+  "thumbnail": "/images/chapters/第42话/thumbnail.png",
   "pages": [
     "/images/chapters/第42话/01.jpg",
     "/images/chapters/第42话/02.jpg",
@@ -20,6 +20,7 @@
     "/images/chapters/第42话/13.jpg",
     "/images/chapters/第42话/14.jpg",
     "/images/chapters/第42话/15.jpg",
-    "/images/chapters/第42话/16.jpg"
+    "/images/chapters/第42话/16.jpg",
+    "/images/chapters/第42话/thumbnail.png"
   ]
 }

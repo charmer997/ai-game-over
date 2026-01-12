@@ -1,9 +1,9 @@
 {
   "id": "chapter-018",
   "title": "第18话",
-  "publishDate": "2026-01-08",
+  "publishDate": "2026-01-12",
   "description": "",
-  "thumbnail": "/images/chapters/第18话/01.jpg",
+  "thumbnail": "/images/chapters/第18话/thumbnail.png",
   "pages": [
     "/images/chapters/第18话/01.jpg",
     "/images/chapters/第18话/02.jpg",
@@ -35,6 +35,7 @@
     "/images/chapters/第18话/29.jpg",
     "/images/chapters/第18话/30.jpg",
     "/images/chapters/第18话/31.jpg",
-    "/images/chapters/第18话/32.jpg"
+    "/images/chapters/第18话/32.jpg",
+    "/images/chapters/第18话/thumbnail.png"
   ]
 }

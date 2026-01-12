@@ -1,9 +1,9 @@
 {
   "id": "chapter-012",
-  "title": "第12话 青梅竹马正在担心",
-  "publishDate": "2026-01-08",
+  "title": "第12话",
+  "publishDate": "2026-01-12",
   "description": "",
-  "thumbnail": "/images/chapters/第12话/01.jpg",
+  "thumbnail": "/images/chapters/第12话/thumbnail.png",
   "pages": [
     "/images/chapters/第12话/01.jpg",
     "/images/chapters/第12话/02.jpg",
@@ -24,6 +24,7 @@
     "/images/chapters/第12话/17.jpg",
     "/images/chapters/第12话/18.jpg",
     "/images/chapters/第12话/19.jpg",
-    "/images/chapters/第12话/20.jpg"
+    "/images/chapters/第12话/20.jpg",
+    "/images/chapters/第12话/thumbnail.png"
   ]
 }

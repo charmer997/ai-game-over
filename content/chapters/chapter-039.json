@@ -1,9 +1,9 @@
 {
   "id": "chapter-039",
   "title": "第39话",
-  "publishDate": "2026-01-08",
+  "publishDate": "2026-01-12",
   "description": "",
-  "thumbnail": "/images/chapters/第39话/01.jpg",
+  "thumbnail": "/images/chapters/第39话/thumbnail.png",
   "pages": [
     "/images/chapters/第39话/01.jpg",
     "/images/chapters/第39话/02.jpg",
@@ -28,6 +28,7 @@
     "/images/chapters/第39话/21.jpg",
     "/images/chapters/第39话/22.jpg",
     "/images/chapters/第39话/23.jpg",
-    "/images/chapters/第39话/24.jpg"
+    "/images/chapters/第39话/24.jpg",
+    "/images/chapters/第39话/thumbnail.png"
   ]
 }

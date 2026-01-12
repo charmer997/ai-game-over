@@ -1,9 +1,9 @@
 {
   "id": "chapter-033",
   "title": "第33话",
-  "publishDate": "2026-01-08",
+  "publishDate": "2026-01-12",
   "description": "",
-  "thumbnail": "/images/chapters/第33话/01.jpg",
+  "thumbnail": "/images/chapters/第33话/thumbnail.png",
   "pages": [
     "/images/chapters/第33话/01.jpg",
     "/images/chapters/第33话/02.jpg",
@@ -32,6 +32,7 @@
     "/images/chapters/第33话/25.jpg",
     "/images/chapters/第33话/26.jpg",
     "/images/chapters/第33话/27.jpg",
-    "/images/chapters/第33话/28.jpg"
+    "/images/chapters/第33话/28.jpg",
+    "/images/chapters/第33话/thumbnail.png"
   ]
 }

@@ -1,9 +1,9 @@
 {
   "id": "chapter-020",
   "title": "第20话",
-  "publishDate": "2026-01-08",
+  "publishDate": "2026-01-12",
   "description": "",
-  "thumbnail": "/images/chapters/第20话/01.jpg",
+  "thumbnail": "/images/chapters/第20话/thumbnail.png",
   "pages": [
     "/images/chapters/第20话/01.jpg",
     "/images/chapters/第20话/02.jpg",
@@ -22,6 +22,7 @@
     "/images/chapters/第20话/15.jpg",
     "/images/chapters/第20话/16.jpg",
     "/images/chapters/第20话/17.jpg",
-    "/images/chapters/第20话/18.jpg"
+    "/images/chapters/第20话/18.jpg",
+    "/images/chapters/第20话/thumbnail.png"
   ]
 }

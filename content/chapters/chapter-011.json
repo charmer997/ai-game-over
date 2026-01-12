@@ -1,9 +1,9 @@
 {
   "id": "chapter-011",
-  "title": "第11话 青梅竹马在手写信",
-  "publishDate": "2026-01-08",
+  "title": "第11话",
+  "publishDate": "2026-01-12",
   "description": "",
-  "thumbnail": "/images/chapters/第11话/01.jpg",
+  "thumbnail": "/images/chapters/第11话/thumbnail.png",
   "pages": [
     "/images/chapters/第11话/01.jpg",
     "/images/chapters/第11话/02.jpg",
@@ -24,6 +24,7 @@
     "/images/chapters/第11话/17.jpg",
     "/images/chapters/第11话/18.jpg",
     "/images/chapters/第11话/19.jpg",
-    "/images/chapters/第11话/20.jpg"
+    "/images/chapters/第11话/20.jpg",
+    "/images/chapters/第11话/thumbnail.png"
   ]
 }

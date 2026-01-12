@@ -1,9 +1,9 @@
 {
   "id": "chapter-028",
   "title": "第28话",
-  "publishDate": "2026-01-08",
+  "publishDate": "2026-01-12",
   "description": "",
-  "thumbnail": "/images/chapters/第28话/01.jpg",
+  "thumbnail": "/images/chapters/第28话/thumbnail.png",
   "pages": [
     "/images/chapters/第28话/01.jpg",
     "/images/chapters/第28话/02.jpg",
@@ -29,6 +29,7 @@
     "/images/chapters/第28话/23.jpg",
     "/images/chapters/第28话/24.jpg",
     "/images/chapters/第28话/25.jpg",
-    "/images/chapters/第28话/26.jpg"
+    "/images/chapters/第28话/26.jpg",
+    "/images/chapters/第28话/thumbnail.png"
   ]
 }

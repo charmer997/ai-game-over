@@ -70,7 +70,7 @@ export default function ChaptersPage({ chapters }: ChaptersPageProps) {
             
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {/* 单行本快捷入口 */}
-              {getAllVolumes().slice(0, 4).map((volume) => (
+              {getAllVolumes().slice(0, 9).map((volume) => (
                 <Link
                   key={volume.id}
                   href={`/chapters/volume/${volume.id}`}

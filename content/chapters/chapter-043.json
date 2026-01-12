@@ -1,9 +1,9 @@
 {
   "id": "chapter-043",
   "title": "第43话",
-  "publishDate": "2026-01-08",
+  "publishDate": "2026-01-12",
   "description": "",
-  "thumbnail": "/images/chapters/第43话/01.jpg",
+  "thumbnail": "/images/chapters/第43话/thumbnail.png",
   "pages": [
     "/images/chapters/第43话/01.jpg",
     "/images/chapters/第43话/02.jpg",
@@ -20,6 +20,7 @@
     "/images/chapters/第43话/13.jpg",
     "/images/chapters/第43话/14.jpg",
     "/images/chapters/第43话/15.jpg",
-    "/images/chapters/第43话/16.jpg"
+    "/images/chapters/第43话/16.jpg",
+    "/images/chapters/第43话/thumbnail.png"
   ]
 }

@@ -1,6 +1,6 @@
 /**
  * 图片路径管理工具
- * 纯GitHub仓库存储方案 - 所有图片存储在public目录中
+ * 支持Cloudflare CDN加速 - 所有图片通过Worker反向代理
  */
 
 export interface ImagePaths {
@@ -29,7 +29,7 @@ export interface ImagePaths {
 
 /**
  * 图片路径配置
- * 所有路径都相对于public目录
+ * 所有路径都相对于public目录，通过CDN加速
  */
 export const IMAGE_PATHS: ImagePaths = {
   chapters: {
@@ -56,10 +56,21 @@ export const IMAGE_PATHS: ImagePaths = {
 }
 
 /**
- * 获取图片完整URL（用于未来扩展到CDN）
- * 目前直接返回路径，保持与GitHub Pages兼容
+ * 获取图片完整URL
+ * 生产环境使用CDN加速，开发环境直接返回路径
  */
 export const getImageUrl = (path: string): string => {
+  // 如果已经是完整URL，直接返回
+  if (path.startsWith('http')) {
+    return path
+  }
+  
+  // 生产环境通过CDN加速
+  if (process.env.NODE_ENV === 'production') {
+    return `https://aishiteru-game.online${path}`
+  }
+  
+  // 开发环境直接返回路径
   return path
 }
 

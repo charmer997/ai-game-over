@@ -1,9 +1,9 @@
 {
   "id": "chapter-022",
   "title": "第22话",
-  "publishDate": "2026-01-08",
+  "publishDate": "2026-01-12",
   "description": "",
-  "thumbnail": "/images/chapters/第22话/01.jpg",
+  "thumbnail": "/images/chapters/第22话/thumbnail.png",
   "pages": [
     "/images/chapters/第22话/01.jpg",
     "/images/chapters/第22话/02.jpg",
@@ -22,6 +22,7 @@
     "/images/chapters/第22话/15.jpg",
     "/images/chapters/第22话/16.jpg",
     "/images/chapters/第22话/17.jpg",
-    "/images/chapters/第22话/18.jpg"
+    "/images/chapters/第22话/18.jpg",
+    "/images/chapters/第22话/thumbnail.png"
   ]
 }

@@ -1,9 +1,9 @@
 {
   "id": "chapter-002",
-  "title": "第02话 青梅竹马难以习惯",
-  "publishDate": "2026-01-08",
+  "title": "第02话",
+  "publishDate": "2026-01-12",
   "description": "",
-  "thumbnail": "/images/chapters/第02话/01.jpg",
+  "thumbnail": "/images/chapters/第02话/thumbnail.png",
   "pages": [
     "/images/chapters/第02话/01.jpg",
     "/images/chapters/第02话/02.jpg",
@@ -30,6 +30,7 @@
     "/images/chapters/第02话/23.jpg",
     "/images/chapters/第02话/24.jpg",
     "/images/chapters/第02话/25.jpg",
-    "/images/chapters/第02话/99-1.jpg"
+    "/images/chapters/第02话/99-1.jpg",
+    "/images/chapters/第02话/thumbnail.png"
   ]
 }

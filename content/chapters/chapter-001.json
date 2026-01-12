@@ -1,9 +1,9 @@
 {
   "id": "chapter-001",
-  "title": "第01话 青梅竹马不想认输",
-  "publishDate": "2026-01-08",
+  "title": "第01话",
+  "publishDate": "2026-01-12",
   "description": "",
-  "thumbnail": "/images/chapters/第01话/01.jpg",
+  "thumbnail": "/images/chapters/第01话/thumbnail.png",
   "pages": [
     "/images/chapters/第01话/01.jpg",
     "/images/chapters/第01话/02.jpg",
@@ -61,6 +61,7 @@
     "/images/chapters/第01话/56.jpg",
     "/images/chapters/第01话/57.jpg",
     "/images/chapters/第01话/58.jpg",
-    "/images/chapters/第01话/59.jpg"
+    "/images/chapters/第01话/59.jpg",
+    "/images/chapters/第01话/thumbnail.png"
   ]
 }

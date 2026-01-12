@@ -1,9 +1,9 @@
 {
   "id": "chapter-026",
   "title": "第26话",
-  "publishDate": "2026-01-08",
+  "publishDate": "2026-01-12",
   "description": "",
-  "thumbnail": "/images/chapters/第26话/01.jpg",
+  "thumbnail": "/images/chapters/第26话/thumbnail.png",
   "pages": [
     "/images/chapters/第26话/01.jpg",
     "/images/chapters/第26话/02.jpg",
@@ -28,6 +28,7 @@
     "/images/chapters/第26话/21.jpg",
     "/images/chapters/第26话/22.jpg",
     "/images/chapters/第26话/23.jpg",
-    "/images/chapters/第26话/24.jpg"
+    "/images/chapters/第26话/24.jpg",
+    "/images/chapters/第26话/thumbnail.png"
   ]
 }

@@ -1,9 +1,9 @@
 {
   "id": "chapter-034",
   "title": "第34话",
-  "publishDate": "2026-01-08",
+  "publishDate": "2026-01-12",
   "description": "",
-  "thumbnail": "/images/chapters/第34话/01.jpg",
+  "thumbnail": "/images/chapters/第34话/thumbnail.png",
   "pages": [
     "/images/chapters/第34话/01.jpg",
     "/images/chapters/第34话/02.jpg",
@@ -29,6 +29,7 @@
     "/images/chapters/第34话/22-23.jpg",
     "/images/chapters/第34话/24.jpg",
     "/images/chapters/第34话/25.jpg",
-    "/images/chapters/第34话/26.jpg"
+    "/images/chapters/第34话/26.jpg",
+    "/images/chapters/第34话/thumbnail.png"
   ]
 }

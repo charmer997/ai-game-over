@@ -1,9 +1,9 @@
 {
   "id": "chapter-017",
   "title": "第17话",
-  "publishDate": "2026-01-08",
+  "publishDate": "2026-01-12",
   "description": "",
-  "thumbnail": "/images/chapters/第17话/01.jpg",
+  "thumbnail": "/images/chapters/第17话/thumbnail.png",
   "pages": [
     "/images/chapters/第17话/01.jpg",
     "/images/chapters/第17话/02.jpg",
@@ -19,6 +19,7 @@
     "/images/chapters/第17话/12.jpg",
     "/images/chapters/第17话/13.jpg",
     "/images/chapters/第17话/14-15.jpg",
-    "/images/chapters/第17话/16.jpg"
+    "/images/chapters/第17话/16.jpg",
+    "/images/chapters/第17话/thumbnail.png"
   ]
 }

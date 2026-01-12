@@ -13,3 +13,7 @@ ENVIRONMENT = "production"
 binding = "DB"
 database_name = "lovegame"
 database_id = "e0b6869a-d8d1-4c9d-8ab0-d80244395cdf"
+
+[[r2_buckets]]
+binding = "R2"
+bucket_name = "r2-lovegame"

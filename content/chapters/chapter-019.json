@@ -1,9 +1,9 @@
 {
   "id": "chapter-019",
   "title": "第19话",
-  "publishDate": "2026-01-08",
+  "publishDate": "2026-01-12",
   "description": "",
-  "thumbnail": "/images/chapters/第19话/01.jpg",
+  "thumbnail": "/images/chapters/第19话/thumbnail.png",
   "pages": [
     "/images/chapters/第19话/01.jpg",
     "/images/chapters/第19话/02.jpg",
@@ -33,6 +33,7 @@
     "/images/chapters/第19话/27.jpg",
     "/images/chapters/第19话/28.jpg",
     "/images/chapters/第19话/29.jpg",
-    "/images/chapters/第19话/30.jpg"
+    "/images/chapters/第19话/30.jpg",
+    "/images/chapters/第19话/thumbnail.png"
   ]
 }

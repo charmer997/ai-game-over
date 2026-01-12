@@ -54,8 +54,10 @@ export function getExtraChapters(categoryId: string = 'extra') {
         isExtraChapter(chapter.id) && chapter.id === 'chapter-20.2'
       )
     } else if (categoryId === 'fanbox') {
-      // Fanbox章节，暂时为空
-      return []
+      // Fanbox章节，返回所有fanbox前缀的章节
+      return allChapters.filter(chapter =>
+        chapter.id.startsWith('fanbox-')
+      ).sort((a, b) => new Date(a.publishDate).getTime() - new Date(b.publishDate).getTime())
     }
     
     return []

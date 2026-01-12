@@ -1,9 +1,9 @@
 {
   "id": "chapter-003",
-  "title": "第03话 青梅竹马想要料理",
-  "publishDate": "2026-01-08",
+  "title": "第03话",
+  "publishDate": "2026-01-12",
   "description": "",
-  "thumbnail": "/images/chapters/第03话/01.jpg",
+  "thumbnail": "/images/chapters/第03话/thumbnail.png",
   "pages": [
     "/images/chapters/第03话/01.jpg",
     "/images/chapters/第03话/02.jpg",
@@ -24,6 +24,7 @@
     "/images/chapters/第03话/17.jpg",
     "/images/chapters/第03话/18.jpg",
     "/images/chapters/第03话/19.jpg",
-    "/images/chapters/第03话/20.jpg"
+    "/images/chapters/第03话/20.jpg",
+    "/images/chapters/第03话/thumbnail.png"
   ]
 }

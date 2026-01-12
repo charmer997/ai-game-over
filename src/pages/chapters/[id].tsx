@@ -16,6 +16,31 @@ interface ChapterPageProps {
 
 export default function ChapterPage({ chapter, prevChapter, nextChapter }: ChapterPageProps) {
   const router = useRouter()
+  const [viewMode, setViewMode] = useState<'single' | 'double'>('double')
+  const [isFullscreen, setIsFullscreen] = useState(false)
+
+  // 切换全屏模式
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.error(`Error attempting to enable fullscreen: ${err.message}`)
+      })
+    } else {
+      document.exitFullscreen()
+    }
+  }
+
+  // 检测全屏状态变化
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement)
+    }
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange)
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange)
+    }
+  }, [])
 
   if (!chapter) {
     return (
@@ -72,15 +97,61 @@ export default function ChapterPage({ chapter, prevChapter, nextChapter }: Chapt
               onPrevChapter={goToPrevChapter}
               hasNextChapter={!!nextChapter}
               hasPrevChapter={!!prevChapter}
+              showControls={false} // 禁用内置控制按钮，使用外部控制
+              externalViewMode={viewMode} // 传递外部控制的视图模式
+              onToggleFullscreen={toggleFullscreen} // 传递全屏切换函数
             />
           )}
         </div>
 
         {/* 桌面端底部导航 */}
         <div className="hidden md:flex justify-between items-center py-4 border-t border-gray-200 container-responsive">
-          <Link href="/chapters" className="btn btn-primary">
-            返回目录
-          </Link>
+          <div className="flex items-center space-x-4">
+            <Link href="/chapters" className="btn btn-primary">
+              返回目录
+            </Link>
+            
+            {/* 单双页切换按钮 */}
+            <div className="flex bg-gray-200 rounded-lg p-1">
+              <button
+                onClick={() => setViewMode('single')}
+                className={`px-3 py-1 rounded text-sm transition-colors ${
+                  viewMode === 'single'
+                    ? 'bg-white text-gray-900 shadow-sm'
+                    : 'text-gray-600 hover:bg-gray-300'
+                }`}
+              >
+                单页
+              </button>
+              <button
+                onClick={() => setViewMode('double')}
+                className={`px-3 py-1 rounded text-sm transition-colors ${
+                  viewMode === 'double'
+                    ? 'bg-white text-gray-900 shadow-sm'
+                    : 'text-gray-600 hover:bg-gray-300'
+                }`}
+              >
+                双页
+              </button>
+            </div>
+            
+            {/* 全屏切换按钮 */}
+            {/* <button
+              onClick={toggleFullscreen}
+              className="px-3 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-gray-600 transition-colors"
+              title={isFullscreen ? "退出全屏" : "进入全屏"}
+            >
+              {isFullscreen ? (
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5l5.25 5.25" />
+                </svg>
+              ) : (
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                </svg>
+              )}
+            </button> */}
+          </div>
           
           <div className="flex space-x-4">
             {prevChapter && (

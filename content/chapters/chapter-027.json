@@ -1,9 +1,9 @@
 {
   "id": "chapter-027",
   "title": "第27话",
-  "publishDate": "2026-01-08",
+  "publishDate": "2026-01-12",
   "description": "",
-  "thumbnail": "/images/chapters/第27话/01.jpg",
+  "thumbnail": "/images/chapters/第27话/thumbnail.png",
   "pages": [
     "/images/chapters/第27话/01.jpg",
     "/images/chapters/第27话/02.jpg",
@@ -26,6 +26,7 @@
     "/images/chapters/第27话/19.jpg",
     "/images/chapters/第27话/20.jpg",
     "/images/chapters/第27话/21.jpg",
-    "/images/chapters/第27话/22.jpg"
+    "/images/chapters/第27话/22.jpg",
+    "/images/chapters/第27话/thumbnail.png"
   ]
 }
