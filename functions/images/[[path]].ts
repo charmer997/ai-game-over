@@ -1,15 +1,17 @@
 export async function onRequest({ env, params }: any) {
-    // 1️⃣ params.path 必须是数组
     if (!params.path || !Array.isArray(params.path)) {
         return new Response("no path", { status: 400 })
     }
 
-    // 2️⃣ 拼 R2 key
-    const key = `images/${params.path.join("/")}`
+    const decodedPath = (params.path as string[]).map(
+        (p: string) => decodeURIComponent(p)
+    )
 
-    // 3️⃣ 直接 get，不做任何花活
+    const key = `images/${decodedPath.join("/")}`
+
     const object = await env.R2.get(key)
 
+    //R2 MISS
     if (!object) {
         return new Response(
             `R2 MISS\nkey = ${key}`,
@@ -19,8 +21,11 @@ export async function onRequest({ env, params }: any) {
 
     return new Response(object.body, {
         headers: {
-            "Content-Type": "image/jpeg",
-            "Cache-Control": "public, max-age=31536000"
+
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "Accept-Ranges": "bytes",
+            "Content-Type": "image/png",
         }
     })
+
 }

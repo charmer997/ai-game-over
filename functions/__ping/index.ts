@@ -1,3 +1,3 @@
 export async function onRequest() {
-    return new Response("FUNCTION_OK", { status: 200 })
+    return new Response("OK", { status: 200 })
 }

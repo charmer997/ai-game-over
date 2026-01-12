@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import Layout from '@/components/layout/Layout'
 import ChapterCard from '@/components/ui/ChapterCard'
+import ChapterGridCard from '@/components/ui/ChapterGridCard'
 import NewsCard from '@/components/ui/NewsCard'
 import { getAllChapters, getAllNews } from '@/lib/api'
 
@@ -76,7 +77,7 @@ export default function HomePage({ chapters, news }: HomePageProps) {
                   漫画资源
                 </Link>
                 <Link href="/news" className="btn border-2 border-white text-black hover:bg-white hover:text-primary-600">
-                  漫画情报
+                  消息情报
                 </Link>
               </div>
             </div>
@@ -93,10 +94,22 @@ export default function HomePage({ chapters, news }: HomePageProps) {
               </Link>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {chapters.slice(0, 6).map((chapter) => (
-                <ChapterCard key={chapter.id} chapter={chapter} />
-              ))}
+            <div>
+              {/* web卡片布局 */}
+              <div className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {chapters.slice(0, 6).map((chapter) => (
+                  <ChapterCard key={chapter.id} chapter={chapter} />
+                ))}
+              </div>
+
+              {/* 移动端布局,列小图标 */}
+              <div className="md:hidden w-full">
+                <div className="grid grid-cols-4 gap-2">
+                  {chapters.slice(0, 12).map((chapter) => (
+                    <ChapterGridCard key={chapter.id} chapter={chapter} />
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -138,7 +151,7 @@ export default function HomePage({ chapters, news }: HomePageProps) {
               
               <Link href="/news" className="card text-center hover:shadow-lg transition-shadow">
                 <div className="text-4xl mb-4">📰</div>
-                <h3 className="text-xl font-semibold mb-2">漫画情报</h3>
+                <h3 className="text-xl font-semibold mb-2">消息情报</h3>
               
               </Link>
             </div>
@@ -150,7 +163,8 @@ export default function HomePage({ chapters, news }: HomePageProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const chapters = getAllChapters().slice(0, 6)
+  // 改为为移动端提供更多条目，桌面仍然只显示前 6 条
+  const chapters = getAllChapters().slice(0, 24)
   const news = getAllNews().slice(0, 3)
 
   return {

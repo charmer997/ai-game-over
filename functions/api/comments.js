@@ -77,8 +77,7 @@ export async function onRequest(context) {
             headers: { 'Content-Type': 'application/json' }
           })
         } else {
-          // 如果插入失败，返回模拟数据
-          console.warn('Failed to insert comment, returning mock comment')
+          // 如果插入失败，返回模拟的
           const newComment = {
             id: Date.now().toString(),
             content,
@@ -93,7 +92,7 @@ export async function onRequest(context) {
           })
         }
       } catch (dbError) {
-        console.error('Database insert error:', dbError)
+        console.error(dbError)
         // 数据库插入失败，返回模拟数据
         const newComment = {
           id: Date.now().toString(),
@@ -147,9 +146,10 @@ export async function onRequest(context) {
       // 编辑评论
       const body = await request.json()
       const { id, content } = body
-      
+
+      //这个bug有概率有 复现率不低
       if (!id || !content) {
-        return new Response(JSON.stringify({ error: 'Comment ID and content are required' }), {
+        return new Response(JSON.stringify({ error: '莫名其妙丢了目标id' }), {
           status: 400,
           headers: { 'Content-Type': 'application/json' }
         })
@@ -161,19 +161,19 @@ export async function onRequest(context) {
         ).bind(content, new Date().toISOString(), id).run()
         
         if (success && meta && meta.changes > 0) {
-          return new Response(JSON.stringify({ success: true, message: '评论更新成功' }), {
+          return new Response(JSON.stringify({ success: true, message: '编辑成功喵' }), {
             status: 200,
             headers: { 'Content-Type': 'application/json' }
           })
         } else {
-          return new Response(JSON.stringify({ error: '评论不存在或更新失败' }), {
+          return new Response(JSON.stringify({ error: '评论不存在或编辑失败' }), {
             status: 404,
             headers: { 'Content-Type': 'application/json' }
           })
         }
       } catch (dbError) {
         console.error('Database update error:', dbError)
-        return new Response(JSON.stringify({ error: '更新评论失败' }), {
+        return new Response(JSON.stringify({ error: '编辑败喵' }), {
           status: 500,
           headers: { 'Content-Type': 'application/json' }
         })
@@ -181,7 +181,7 @@ export async function onRequest(context) {
     }
   } catch (error) {
     console.error('Comments API error:', error)
-    return new Response(JSON.stringify({ error: 'Internal server error' }), {
+    return new Response(JSON.stringify({ error: '大哥，你网不行' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
     })

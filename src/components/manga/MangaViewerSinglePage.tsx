@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { getImageUrl } from '@/lib/images'
 
 // 单页阅读器使用略微较大的展示比例（比双页更明显，但留出边距）
-const SINGLE_PAGE_SCALE = 0.85
+const SINGLE_PAGE_SCALE = 0.9
 
 interface MangaViewerProps {
   pages: string[]
@@ -26,9 +26,38 @@ export default function MangaViewerSinglePage({
   const [currentPage, setCurrentPage] = useState(0)
   const [showUI, setShowUI] = useState(true)
   const [isFullscreen, setIsFullscreen] = useState(false)
+  // 按窗口宽度动态调整缩放：针对窄屏（手机）使用更小的 scale
+  const [scale, setScale] = useState<number>(SINGLE_PAGE_SCALE)
   const hideTimer = useRef<NodeJS.Timeout | null>(null)
   const touchStartX = useRef<number | null>(null)
   const touchEndX = useRef<number | null>(null)
+
+  useEffect(() => {
+    // 在客户端运行时根据窗口宽度设置合适的缩放
+    const updateScale = () => {
+      if (externalFullscreen) {
+        setScale(1)
+        return
+      }
+
+      if (typeof window === 'undefined') return
+      const w = window.innerWidth
+      // 更窄的设备使用更小的缩放以避免裁切（你可以按需调整阈值和值）
+      if (w <= 360) {
+        setScale(0.78)
+      } else if (w <= 420) {
+        setScale(0.82)
+      } else if (w <= 520) {
+        setScale(0.86)
+      } else {
+        setScale(SINGLE_PAGE_SCALE)
+      }
+    }
+
+    updateScale()
+    window.addEventListener('resize', updateScale)
+    return () => window.removeEventListener('resize', updateScale)
+  }, [externalFullscreen])
 
   // 重置UI显示计时器
   const resetUI = () => {
@@ -184,13 +213,13 @@ export default function MangaViewerSinglePage({
               decoding="async"
               style={{
                 imageRendering: 'auto',
-                // Webry核心：图片高度始终撑满整个浏览器视口
-                height: externalFullscreen ? '100vh' : '100%',
+                // 改为按尺寸限制，避免在小屏造成裁切需要滚动
+                height: 'auto',
                 width: 'auto',
                 objectFit: 'contain',
-                maxHeight: externalFullscreen ? '100vh' : 'none',
-                maxWidth: externalFullscreen ? '100vw' : 'none',
-                transform: `scale(${SINGLE_PAGE_SCALE})`,
+                maxHeight: externalFullscreen ? '100vh' : '100%',
+                maxWidth: externalFullscreen ? '100vw' : '100%',
+                transform: `scale(${scale})`,
                 transformOrigin: 'center center',
                 background: 'white'
               } as React.CSSProperties}

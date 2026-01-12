@@ -6,30 +6,18 @@ import Layout from '@/components/layout/Layout'
 import ChapterCard from '@/components/ui/ChapterCard'
 import ChapterGridCard from '@/components/ui/ChapterGridCard'
 import { getAllChapters } from '@/lib/api'
-import { getAllVolumes, getExtraCategories } from '@/lib/volumes'
+import { getAllVolumes } from '@/lib/volumes'
 
 interface ChaptersPageProps {
   chapters: any[]
 }
 
 export default function ChaptersPage({ chapters }: ChaptersPageProps) {
-  const [isMobile, setIsMobile] = useState(false)
   const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>('desc') // 默认倒序（最新在前）
 
   useEffect(() => {
-    // 检测是否为移动设备
-    const checkIsMobile = () => {
-      const userAgent = typeof window.navigator === 'undefined' ? '' : navigator.userAgent
-      const mobile = Boolean(
-        userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i) ||
-        window.innerWidth < 768
-      )
-      setIsMobile(mobile)
-    }
-
-    checkIsMobile()
-    window.addEventListener('resize', checkIsMobile)
-    return () => window.removeEventListener('resize', checkIsMobile)
+    // 保留 effect 以便未来扩展客户端检测
+    return () => {}
   }, [])
 
   // 根据排序顺序排序章节
@@ -172,10 +160,10 @@ export default function ChaptersPage({ chapters }: ChaptersPageProps) {
               )}
             </div>
 
-            {/* 移动端2x2网格布局 */}
+            {/* 移动端 4 列紧凑网格（默认显示 12 条） */}
             <div className="md:hidden">
-              <div className="grid grid-cols-2 gap-3">
-                {sortedChapters.slice(0, 4).map((chapter) => (
+              <div className="grid grid-cols-4 gap-2">
+                {sortedChapters.slice(0, 12).map((chapter) => (
                   <ChapterGridCard key={chapter.id} chapter={chapter} />
                 ))}
               </div>

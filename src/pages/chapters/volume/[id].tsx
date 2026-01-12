@@ -41,7 +41,7 @@ export default function VolumePage({ volume, chapters, allChapters }: VolumePage
   return (
     <>
       <Head>
-        <title>{volume.title} - 恋爱游戏</title>
+        <title>{volume.title}</title>
         <meta name="description" content={`${volume.title} - ${volume.description}`} />
       </Head>
       

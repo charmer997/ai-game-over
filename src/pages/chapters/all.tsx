@@ -12,29 +12,21 @@ interface AllChaptersPageProps {
 }
 
 export default function AllChaptersPage({ chapters }: AllChaptersPageProps) {
-  const [isMobile, setIsMobile] = useState(false)
+  const [mobileShowAll, setMobileShowAll] = useState(false)
 
   useEffect(() => {
-    // 检测是否为移动设备
-    const checkIsMobile = () => {
-      const userAgent = typeof window.navigator === 'undefined' ? '' : navigator.userAgent
-      const mobile = Boolean(
-        userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i) ||
-        window.innerWidth < 768
-      )
-      setIsMobile(mobile)
-    }
-
-    checkIsMobile()
-    window.addEventListener('resize', checkIsMobile)
-    return () => window.removeEventListener('resize', checkIsMobile)
+    // 仅在客户端时确认，如果需要可在未来基于窗口宽度做更细致处理
+    return () => {}
   }, [])
+
+  // 移动端默认显示 4 列 x 3 行 = 12 个（更紧凑的浏览），点击加载更多可展开全部
+  const mobileVisibleChapters = mobileShowAll ? chapters : chapters.slice(0, 12)
 
   return (
     <>
       <Head>
-        <title>所有章节 - 恋爱游戏</title>
-        <meta name="description" content="恋爱游戏漫画所有章节列表" />
+        <title>所有章节</title>
+        <meta name="description" content="All①" />
       </Head>
 
       <Layout>
@@ -56,7 +48,7 @@ export default function AllChaptersPage({ chapters }: AllChaptersPageProps) {
           <div className="text-center mb-6 md:mb-12">
             <h1 className="text-2xl md:text-4xl font-bold text-gray-900 mb-2 md:mb-4">所有章节</h1>
             <p className="text-sm md:text-xl text-gray-600 max-w-2xl mx-auto">
-              共 {chapters.length} 话
+              共 {chapters.length} 话 (含饭盒)
             </p>
           </div>
 
@@ -70,15 +62,15 @@ export default function AllChaptersPage({ chapters }: AllChaptersPageProps) {
 
             {chapters.length === 0 && (
               <div className="text-center py-12">
-                <p className="text-gray-500 text-lg">暂无章节内容</p>
+                <p className="text-gray-500 text-lg">暂无捏</p>
               </div>
             )}
           </div>
 
-          {/* 移动端2x2网格布局 */}
+          {/* 移动端 4 列紧凑网格（默认显示 12 条） */}
           <div className="md:hidden">
-            <div className="grid grid-cols-2 gap-3">
-              {chapters.map((chapter) => (
+            <div className="grid grid-cols-4 gap-2">
+              {mobileVisibleChapters.map((chapter) => (
                 <ChapterGridCard key={chapter.id} chapter={chapter} />
               ))}
             </div>
@@ -88,7 +80,18 @@ export default function AllChaptersPage({ chapters }: AllChaptersPageProps) {
                 <p className="text-gray-500 text-lg">暂无章节内容</p>
               </div>
             )}
-          </div>
+
+            {chapters.length > 12 && (
+               <div className="text-center mt-4">
+                 <button
+                   onClick={() => setMobileShowAll(!mobileShowAll)}
+                   className="inline-flex items-center px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+                 >
+                  {mobileShowAll ? '收起' : `加载更多 (${chapters.length - 12})`}
+                 </button>
+               </div>
+             )}
+           </div>
         </div>
       </Layout>
     </>

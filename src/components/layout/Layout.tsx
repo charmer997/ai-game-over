@@ -11,7 +11,7 @@ interface LayoutProps {
 }
 
 //浏览器标签页控制
-export default function Layout({ children, title = '想让"我爱你"的游戏快点结束"', description = '爱游结同好会' }: LayoutProps) {
+export default function Layout({ children, title = '想让"我爱你"的游戏快点结束', description = '爱游结同好会' }: LayoutProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const router = useRouter()

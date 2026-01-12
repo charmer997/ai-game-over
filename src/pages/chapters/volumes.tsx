@@ -19,8 +19,8 @@ export default function VolumesPage({ volumes, extraCategories }: VolumesPagePro
   return (
     <>
       <Head>
-        <title>单行本 - 恋爱游戏</title>
-        <meta name="description" content="恋爱游戏漫画单行本列表" />
+        <title>单行本</title>
+        <meta name="description" content="漫画单行本列表" />
       </Head>
       
       <Layout>

@@ -12,15 +12,14 @@ export default function NewsPage({ news }: NewsPageProps) {
   return (
     <>
       <Head>
-        <title>漫画情报 - 漫画同好网站</title>
-        <meta name="description" content="获取最新的漫画相关资讯和情报" />
+        <title>消息情报</title>
       </Head>
 
       <Layout>
         <div className="container-responsive py-8">
           {/* 页面标题 */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">漫画情报</h1>
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">消息情报</h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               获取最新的漫画相关资讯和情报
             </p>
