@@ -189,7 +189,9 @@ export default function MangaViewerSinglePage({
                 width: 'auto',
                 objectFit: 'contain',
                 maxHeight: externalFullscreen ? '100vh' : 'none',
-                maxWidth: externalFullscreen ? '100vw' : 'none'
+                maxWidth: externalFullscreen ? '100vw' : 'none',
+                transform: 'scale(0.95)',
+                transformOrigin: 'center center'
               } as React.CSSProperties}
             />
           </div>

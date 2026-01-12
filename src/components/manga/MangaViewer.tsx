@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import MangaViewerSinglePage from './MangaViewerSinglePage'
 import { getImageUrl } from '@/lib/images'
 
+const DOUBLE_PAGE_SCALE = 0.86
+
 interface MangaViewerProps {
   pages: string[]
   title: string
@@ -122,7 +124,9 @@ function MangaViewerDoublePage({
                       width: 'auto',
                       objectFit: 'contain',
                       maxHeight: externalFullscreen ? '100vh' : 'none',
-                      maxWidth: externalFullscreen ? '50vw' : 'none'
+                      maxWidth: externalFullscreen ? '50vw' : 'none',
+                      transform: `scale(${DOUBLE_PAGE_SCALE})`,
+                      transformOrigin: 'right center'
                     }}
                   />
                 )}
@@ -141,7 +145,10 @@ function MangaViewerDoublePage({
                       width: 'auto',
                       objectFit: 'contain',
                       maxHeight: externalFullscreen ? '100vh' : 'none',
-                      maxWidth: externalFullscreen ? '50vw' : 'none'
+                      maxWidth: externalFullscreen ? '50vw' : 'none',
+                        transform: `scale(${DOUBLE_PAGE_SCALE})`,
+    transformOrigin: 'left center'
+
                     }}
                   />
                 )}
