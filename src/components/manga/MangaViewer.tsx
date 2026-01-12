@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import MangaViewerSinglePage from './MangaViewerSinglePage'
 import { getImageUrl } from '@/lib/images'
 
-const DOUBLE_PAGE_SCALE = 0.86
+// 初始调大一点让两页尽量贴合中线
+const DOUBLE_PAGE_SCALE = 1.0
 
 interface MangaViewerProps {
   pages: string[]
@@ -49,10 +50,10 @@ function buildSpreads(pages: string[]): Spread[] {
 function MangaViewerDoublePage({
   pages,
   title,
-  onNextChapter,
-  onPrevChapter,
-  hasNextChapter,
-  hasPrevChapter,
+  onNextChapter: _onNextChapter,
+  onPrevChapter: _onPrevChapter,
+  hasNextChapter: _hasNextChapter,
+  hasPrevChapter: _hasPrevChapter,
   externalFullscreen = false,
 }: MangaViewerProps) {
   const spreads = buildSpreads(pages)
@@ -110,45 +111,42 @@ function MangaViewerDoublePage({
           style={{ transform: `translateX(${-index * 100}%)` }}
         >
           {spreads.map((s, i) => (
-            <div key={i} className={`w-full ${externalFullscreen ? 'h-screen' : 'h-full'} flex shrink-0 bg-white`}>
-              {/* 左页 - Webry核心缩放策略：高度始终撑满整个浏览器视口 */}
-              <div className="w-1/2 h-full flex items-center justify-end overflow-hidden">
+            <div key={i} className={`w-full ${externalFullscreen ? 'h-screen' : 'h-full'} flex shrink-0 bg-white gap-0 p-0`}>
+              {/* 左页 - 高度由父容器控制，图片高度为 100% */}
+              <div className="h-full flex items-stretch justify-end overflow-hidden" style={{ flex: '0 0 50%' }}>
                 {s.left !== null && (
                   <img
                     src={getImageUrl(pages[s.left])}
                     alt=""
                     draggable={false}
-                    className="select-none"
+                    className="select-none bg-white block"
                     style={{
-                      height: externalFullscreen ? '100vh' : '100%',
+                      height: '100%',
                       width: 'auto',
                       objectFit: 'contain',
-                      maxHeight: externalFullscreen ? '100vh' : 'none',
-                      maxWidth: externalFullscreen ? '50vw' : 'none',
-                      transform: `scale(${DOUBLE_PAGE_SCALE})`,
-                      transformOrigin: 'right center'
+                      transform: `translateX(0.5px) scale(${DOUBLE_PAGE_SCALE})`,
+                      transformOrigin: 'right center',
+                      background: 'white'
                     }}
                   />
                 )}
               </div>
 
-              {/* 右页 - Webry核心缩放策略：高度始终撑满整个浏览器视口 */}
-              <div className="w-1/2 h-full flex items-center justify-start overflow-hidden">
+              {/* 右页 - 高度由父容器控制，图片高度为 100% */}
+              <div className="h-full flex items-stretch justify-start overflow-hidden" style={{ flex: '0 0 50%' }}>
                 {s.right !== null && (
                   <img
                     src={getImageUrl(pages[s.right])}
                     alt=""
                     draggable={false}
-                    className="select-none"
+                    className="select-none bg-white block"
                     style={{
-                      height: externalFullscreen ? '100vh' : '100%',
+                      height: '100%',
                       width: 'auto',
                       objectFit: 'contain',
-                      maxHeight: externalFullscreen ? '100vh' : 'none',
-                      maxWidth: externalFullscreen ? '50vw' : 'none',
-                        transform: `scale(${DOUBLE_PAGE_SCALE})`,
-    transformOrigin: 'left center'
-
+                      transform: `translateX(-0.5px) scale(${DOUBLE_PAGE_SCALE})`,
+                      transformOrigin: 'left center',
+                      background: 'white'
                     }}
                   />
                 )}
@@ -207,7 +205,7 @@ export default function MangaViewer(props: MangaViewerProps) {
   return (
     <>
       {props.showControls !== false && (
-        <div className="fixed top-4 right-4 z-50 flex bg-black/70 rounded-lg p-1">
+        <div className="fixed top-4 right-4 z-50 flex bg-white/70 rounded-lg p-1">
           <button
             onClick={() => setInternalViewMode('single')}
             className={`px-3 py-1 rounded text-sm ${

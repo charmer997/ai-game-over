@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { getImageUrl } from '@/lib/images'
 
+// 单页阅读器使用略微较大的展示比例（比双页更明显，但留出边距）
+const SINGLE_PAGE_SCALE = 0.85
+
 interface MangaViewerProps {
   pages: string[]
   title: string
@@ -26,9 +29,6 @@ export default function MangaViewerSinglePage({
   const hideTimer = useRef<NodeJS.Timeout | null>(null)
   const touchStartX = useRef<number | null>(null)
   const touchEndX = useRef<number | null>(null)
-  
-  // 使用外部全屏状态或内部全屏状态
-  const isActuallyFullscreen = externalFullscreen || isFullscreen
 
   // 重置UI显示计时器
   const resetUI = () => {
@@ -190,8 +190,9 @@ export default function MangaViewerSinglePage({
                 objectFit: 'contain',
                 maxHeight: externalFullscreen ? '100vh' : 'none',
                 maxWidth: externalFullscreen ? '100vw' : 'none',
-                transform: 'scale(0.95)',
-                transformOrigin: 'center center'
+                transform: `scale(${SINGLE_PAGE_SCALE})`,
+                transformOrigin: 'center center',
+                background: 'white'
               } as React.CSSProperties}
             />
           </div>
