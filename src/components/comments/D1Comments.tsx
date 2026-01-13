@@ -182,7 +182,7 @@ export default function D1Comments({ pageId }: D1CommentsProps) {
   return (
     <div className="d1-comments">
       <div className="flex items-center justify-between mb-4">
-        <h4 className="text-lg font-medium">游客评论 ({comments.length})</h4>
+        <h4 className="text-lg font-medium">路人评论 ({comments.length})</h4>
         <button
           onClick={() => setShowComments(!showComments)}
           className="text-sm text-primary-600 hover:text-primary-700"

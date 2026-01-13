@@ -6,7 +6,7 @@ import D1Comments from './D1Comments'
 interface CommentSectionProps {
   title?: string
   className?: string
-  pageId?: string // 用于D1评论系统的页面ID
+  pageId?: string 
 }
 
 export default function CommentSection({
@@ -17,7 +17,6 @@ export default function CommentSection({
   const router = useRouter()
   const [currentPath, setCurrentPath] = useState('')
   
-  // 在客户端获取当前路径
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setCurrentPath(window.location.pathname)
@@ -27,15 +26,15 @@ export default function CommentSection({
   // 使用传入的pageId或当前路径
   const finalPageId = pageId || currentPath
   const [showComments, setShowComments] = useState(false)
-  const [commentType, setCommentType] = useState<'giscus' | 'd1'>('d1') // 默认使用D1评论
-  const [giscusKey, setGiscusKey] = useState(0) // 用于强制重新渲染Giscus组件
+  const [commentType, setCommentType] = useState<'giscus' | 'd1'>('d1') // 默认使用D1
+  const [giscusKey, setGiscusKey] = useState(0) 
 
   // Giscus配置 - 请替换为您的实际配置
   const giscusConfig = {
-    repo: 'charmer997/ai-game-over', // 替换为您的GitHub仓库
-    repoId: 'R_kgDOQwf42w', // 替换为您的仓库ID
-    category: 'General', // 替换为您的讨论分类
-    categoryId: 'DIC_kwDOQwf4284C0v4y', // 替换为您的分类ID
+    repo: 'charmer997/ai-game-over', // GitHub仓库
+    repoId: 'R_kgDOQwf42w', // 仓库ID
+    category: 'General', // 讨论Type
+    categoryId: 'DIC_kwDOQwf4284C0v4y', // 分类ID
     mapping: 'pathname' as const,
     strict: false,
     reactionsEnabled: true,
@@ -63,7 +62,7 @@ export default function CommentSection({
           <div className="comment-container">
             {/* 评论类型选择 */}
             <div className="flex items-center space-x-2 mb-4">
-              <span className="text-sm text-gray-600">评论系统：</span>
+              <span className="text-sm text-gray-600">评论：</span>
               <button
                 onClick={() => setCommentType('d1')}
                 className={`px-3 py-1 text-sm rounded-md transition-colors ${
@@ -72,12 +71,12 @@ export default function CommentSection({
                     : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                 }`}
               >
-                游客评论
+                路过的评论
               </button>
               <button
                 onClick={() => {
                   setCommentType('giscus')
-                  setGiscusKey(prev => prev + 1) // 强制重新渲染Giscus组件
+                  setGiscusKey(prev => prev + 1) // 不强制重新渲染Giscus组件会DOM冲突，我也不知道为啥
                 }}
                 className={`px-3 py-1 text-sm rounded-md transition-colors ${
                   commentType === 'giscus'
@@ -93,7 +92,7 @@ export default function CommentSection({
             <div className="bg-gray-100 rounded-lg p-4 mb-4">
               <p className="text-sm text-gray-600">
                 {commentType === 'd1'
-                  ? '💬 游客评论：无需注册，直接输入昵称即可评论。'
+                  ? '💬 路过：无需注册，直接输入昵称即可评论。'
                   : '💬 GitHub评论：需要登录GitHub账号，支持Markdown格式。'
                 }
               </p>

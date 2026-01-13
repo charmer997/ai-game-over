@@ -130,7 +130,7 @@ async function handleImage(req: Request, env: Env): Promise<Response> {
   const body = (object as any).body as BodyInit
 
   if (debugMode) {
-    // 返回匹配信息和 headers（不包括二进制）
+    // 返回匹配信息和 headers
     const info = {
       ok: true,
       usedKey,

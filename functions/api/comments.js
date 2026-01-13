@@ -1,5 +1,4 @@
 // Cloudflare Pages Functions for comments API
-// 这个文件处理生产环境中的评论API请求
 
 export async function onRequest(context) {
   const { request, env } = context

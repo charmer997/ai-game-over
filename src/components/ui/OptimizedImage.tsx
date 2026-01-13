@@ -92,7 +92,7 @@ export function ChapterThumbnail({ chapterId, title }: { chapterId: string; titl
 }
 
 /**
- * 新闻缩略图组件
+ * 情报缩略图组件
  */
 export function NewsThumbnail({ newsId, title }: { newsId: string; title: string }) {
   return (

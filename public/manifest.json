@@ -1,7 +1,7 @@
 {
   "name": "愛してるゲームを終わらせたい",
   "short_name": "爱结游同好会",
-  "description": "仅仅交流学习使用",
+  "description": "仅供交流学习使用",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

@@ -45,7 +45,7 @@ function buildSpreads(pages: string[]): Spread[] {
 }
 
 /**
- * ★ Webry 双页全屏阅读器
+ *   双页全屏
  */
 function MangaViewerDoublePage({
   pages,

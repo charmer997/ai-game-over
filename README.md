@@ -12,7 +12,7 @@
 
 ```
 manga-fansite/
-├── public/                 # 静态资源
+├── public/                 # 静态资源 R2上的
 │   ├── images/            # 图片资源
 │   │   ├── chapters/      # 章节图片
 │   │   ├── characters/    # 人物图片
@@ -32,7 +32,7 @@ manga-fansite/
 │   ├── pages/             # Next.js页面
 │   │   ├── chapters/      # 章节页面
 │   │   ├── characters/    # 人物页面
-│   │   └── news/          # 新闻页面
+│   │   └── news/          # 情报页面
 │   └── styles/            # 样式文件
 ├── content/               # 内容文件
 │   ├── chapters/          # 章节信息 (JSON)
@@ -76,36 +76,20 @@ npm run build
 
 在 `content/chapters/` 目录下创建 JSON 文件：
 
-```json
-{
-  "id": "chapter-002",
-  "title": "第2话：新的冒险",
-  "publishDate": "2024-01-08",
-  "description": "主角开始了新的冒险",
-  "thumbnail": "/images/chapters/第02话/thumbnail.png",
-  "pages": [
-    "/images/chapters/第02话/01.jpg",
-    "/images/chapters/第02话/02.jpg"
-  ]
-}
+### 添加人物信息
+在 `content/characters/` 下添加Markdown文件
+
+```Markdown格式
+---
+name: "浅葱ゆきや"
+title: "test"
+avatar: "/images/characters/2d.gif"
+firstAppearance: "第一话"
+age: "15岁"
+gender: "高中生"
+---
 ```
 
-### 添加人物
-
-在 `content/characters/` 目录下创建 Markdown 文件：
-
-```markdown
----
-name: "角色名"
-title: "角色称号"
-avatar: "/images/characters/role.jpg"
-firstAppearance: "chapter-001"
----
-
-# 人物介绍
-
-这里是人物的详细介绍...
-```
 
 ### 添加情报
 
@@ -116,10 +100,13 @@ firstAppearance: "chapter-001"
 title: "新闻标题"
 excerpt: "新闻摘要"
 publishDate: "2024-01-01"
-thumbnail: "/images/news/thumb.jpg"
+thumbnail: "/images/news/thumb.jpg" //缩略图
 ---
+```
+### 用的 gray-matter这个库来解析Markdown
+要添加更多目前只能改`characters/index`
 
-
+其实是我想不到什么好的展现方式OvO，本来想抄bgm的。
 
 
 
