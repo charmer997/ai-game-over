@@ -25,7 +25,7 @@ export default function CommentSection({
   
   // 使用传入的pageId或当前路径
   const finalPageId = pageId || currentPath
-  const [showComments, setShowComments] = useState(false)
+  const [showComments, setShowComments] = useState(true)
   const [commentType, setCommentType] = useState<'giscus' | 'd1'>('d1') // 默认使用D1
   const [giscusKey, setGiscusKey] = useState(0) 
 
@@ -54,7 +54,7 @@ export default function CommentSection({
             onClick={() => setShowComments(!showComments)}
             className="text-sm text-primary-600 hover:text-primary-700 transition-colors"
           >
-            {showComments ? '隐藏评论' : '显示评论'}
+            {showComments ? '显示评论' : '隐藏评论'}
           </button>
         </div>
         
@@ -71,12 +71,13 @@ export default function CommentSection({
                     : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                 }`}
               >
-                路过的评论
+                匿名评论
               </button>
               <button
                 onClick={() => {
                   setCommentType('giscus')
-                  setGiscusKey(prev => prev + 1) // 不强制重新渲染Giscus组件会DOM冲突，我也不知道为啥
+                  setGiscusKey(prev => prev + 1) 
+                  // 不强制重新渲染Giscus组件会DOM冲突，我也不知道为啥
                 }}
                 className={`px-3 py-1 text-sm rounded-md transition-colors ${
                   commentType === 'giscus'
@@ -92,8 +93,9 @@ export default function CommentSection({
             <div className="bg-gray-100 rounded-lg p-4 mb-4">
               <p className="text-sm text-gray-600">
                 {commentType === 'd1'
-                  ? '💬 路过：无需注册，直接输入昵称即可评论。'
+                  ? '💬 无需注册，直接输入昵称即可评论。'
                   : '💬 GitHub评论：需要登录GitHub账号，支持Markdown格式。'
+          
                 }
               </p>
             </div>

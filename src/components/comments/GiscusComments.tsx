@@ -27,7 +27,7 @@ export default function GiscusComments({
     const container = containerRef.current
     if (!container) return
 
-    // 防止 React StrictMode / 重新渲染重复注入
+    // 防止 React StrictMode 
     if (container.childNodes.length > 0) return
 
     const script = document.createElement('script')

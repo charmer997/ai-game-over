@@ -189,7 +189,6 @@ export function getCharacterBySlug(slug: string) {
     const fullPath = path.join(contentDirectory, 'characters', `${slug}.md`)
     const fileContents = fs.readFileSync(fullPath, 'utf8')
     const matterResult = matter(fileContents)
-    
     return {
       slug,
       ...matterResult.data,
