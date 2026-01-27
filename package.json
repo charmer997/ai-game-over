@@ -1,5 +1,5 @@
 {
-  "name": "manga-fansite",
+  "name": "愛してるゲームを終わらせたい",
   "version": "0.1.1",
   "private": true,
   "scripts": {
@@ -8,7 +8,7 @@
     "export": "next export",
     "start": "next start",
     "lint": "next lint",
-    "cf:dev": "wrangler pages dev public --compatibility-date=2024-01-01",
+    "cf:dev": "wrangler pages dev public --compatibility-date=2026-01-26",
     "cf:deploy": "wrangler pages deploy public --project-name=manga-fans-site",
     "d1:create": "wrangler d1 create manga-fans-db",
     "d1:migrate": "wrangler d1 execute manga-fans-db --file=schema.sql",
